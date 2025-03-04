@@ -1,4 +1,13 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using TechStockWeb.Data;
+using Microsoft.AspNetCore.Identity;
+using TechStockWeb.Areas.Identity.Data;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<TechStock>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("TechStock") ?? throw new InvalidOperationException("Connection string 'TechStock' not found.")));
+
+builder.Services.AddDefaultIdentity<TechStockWebUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>().AddEntityFrameworkStores<TechStock>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -25,5 +34,7 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
+app.MapRazorPages()
+.WithStaticAssets();
 
 app.Run();
