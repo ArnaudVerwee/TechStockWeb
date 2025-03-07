@@ -26,17 +26,8 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        <li>
-                            <partial name="_LoginPartial" />
-                        </li>
                     </ul>
-                    
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="themeToggle">
-                        <label class="form-check-label" for="themeToggle">🌙 Mode Sombre</label>
-                    </div>
-
-                    
+                        <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
@@ -53,31 +44,7 @@
         </div>
     </footer>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const body = document.body;
-            const themeToggle = document.getElementById("themeToggle");
-            const themeLabel = document.querySelector("label[for='themeToggle']");
-
-            // Vérifier si le mode sombre est activé dans localStorage
-            if (localStorage.getItem("darkMode") === "enabled") {
-                body.classList.add("dark-mode");
-                themeToggle.checked = true;
-                themeLabel.innerHTML = "☀";
-            }
-
-            // Basculer entre les thèmes au clic sur le switch
-            themeToggle.addEventListener("change", function () {
-                if (themeToggle.checked) {
-                    body.classList.add("dark-mode");
-                    localStorage.setItem("darkMode", "enabled");
-                    themeLabel.innerHTML = "☀ ";
-                } else {
-                    body.classList.remove("dark-mode");
-                    localStorage.setItem("darkMode", "disabled");
-                    themeLabel.innerHTML = "🌙 ";
-                }
-            });
-        });
+      
     </script>
 
 

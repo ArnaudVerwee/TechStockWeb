@@ -9,10 +9,15 @@ namespace TechStockWeb.Models
         public int Id { get; set; }
         public required string Name { get; set; }
         public required string SerialNumber { get; set; }
+
         [ForeignKey("TypeArticle")]
-        public required string TypeId { get; set; }
+        public required int TypeId { get; set; }
+        public TypeArticle TypeArticle { get; set; }    
+
+
         [ForeignKey("Supplier")]
-        public  required string SupplierId { get; set; }
+        public  required int SupplierId { get; set; }
+        public Supplier Supplier { get; set; }
     }
 }
 

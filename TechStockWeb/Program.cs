@@ -4,10 +4,10 @@ using TechStockWeb.Data;
 using Microsoft.AspNetCore.Identity;
 using TechStockWeb.Areas.Identity.Data;
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<TechStock>(options =>
+builder.Services.AddDbContext<TechStockContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("TechStock") ?? throw new InvalidOperationException("Connection string 'TechStock' not found.")));
 
-builder.Services.AddDefaultIdentity<TechStockWebUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>().AddEntityFrameworkStores<TechStock>();
+builder.Services.AddDefaultIdentity<TechStockWebUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>().AddEntityFrameworkStores<TechStockContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

@@ -10,22 +10,22 @@ using TechStockWeb.Models;
 
 namespace TechStockWeb.Controllers
 {
-    public class UsersController : Controller
+    public class StatesController : Controller
     {
-        private readonly TechStock _context;
+        private readonly TechStockContext _context;
 
-        public UsersController(TechStock context)
+        public StatesController(TechStockContext context)
         {
             _context = context;
         }
 
-        // GET: Users
+        // GET: States
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Users.ToListAsync());
+            return View(await _context.States.ToListAsync());
         }
 
-        // GET: Users/Details/5
+        // GET: States/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace TechStockWeb.Controllers
                 return NotFound();
             }
 
-            var users = await _context.Users
+            var states = await _context.States
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (users == null)
+            if (states == null)
             {
                 return NotFound();
             }
 
-            return View(users);
+            return View(states);
         }
 
-        // GET: Users/Create
+        // GET: States/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Users/Create
+        // POST: States/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Login,Password,CreatedAt")] User users)
+        public async Task<IActionResult> Create([Bind("Id,Status")] States states)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(users);
+                _context.Add(states);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(users);
+            return View(states);
         }
 
-        // GET: Users/Edit/5
+        // GET: States/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace TechStockWeb.Controllers
                 return NotFound();
             }
 
-            var users = await _context.Users.FindAsync(id);
-            if (users == null)
+            var states = await _context.States.FindAsync(id);
+            if (states == null)
             {
                 return NotFound();
             }
-            return View(users);
+            return View(states);
         }
 
-        // POST: Users/Edit/5
+        // POST: States/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Login,Password,CreatedAt")] User users)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Status")] States states)
         {
-            if (id != users.Id)
+            if (id != states.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace TechStockWeb.Controllers
             {
                 try
                 {
-                    _context.Update(users);
+                    _context.Update(states);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UsersExists(users.Id))
+                    if (!StatesExists(states.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace TechStockWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(users);
+            return View(states);
         }
 
-        // GET: Users/Delete/5
+        // GET: States/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,34 +124,34 @@ namespace TechStockWeb.Controllers
                 return NotFound();
             }
 
-            var users = await _context.Users
+            var states = await _context.States
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (users == null)
+            if (states == null)
             {
                 return NotFound();
             }
 
-            return View(users);
+            return View(states);
         }
 
-        // POST: Users/Delete/5
+        // POST: States/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var users = await _context.Users.FindAsync(id);
-            if (users != null)
+            var states = await _context.States.FindAsync(id);
+            if (states != null)
             {
-                _context.Users.Remove(users);
+                _context.States.Remove(states);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UsersExists(int id)
+        private bool StatesExists(int id)
         {
-            return _context.Users.Any(e => e.Id == id);
+            return _context.States.Any(e => e.Id == id);
         }
     }
 }

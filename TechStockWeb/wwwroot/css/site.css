@@ -21,19 +21,7 @@ html {
     min-height: 100%;
 }
 
-/* Mode Clair */
-body {
-    margin-bottom: 60px;
-    background-color: white;
-    color: black;
-    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
-}
 
-/* Mode Sombre */
-.dark-mode {
-    background-color: #6C6C6C;
-    color: white;
-}
 
 /* Navbar */
 .navbar-light {
@@ -75,56 +63,7 @@ body {
     text-align: center;
 }
 
-.dark-mode .footer {
-    background-color: #6C6C6C;
-    color: white;
-}
-
-/* Bouton Mode Sombre/Clair */
-#themeToggle {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    padding: 8px 15px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease-in-out;
-}
-
-    #themeToggle:hover {
-        background-color: #0056b3;
-    }
-
-.dark-mode #themeToggle {
-    background-color: #FFB000;
-    color: black;
-}
-
-    .dark-mode #themeToggle:hover {
-        background-color: #E69C00;
-    }
-
-/* Style du switch */
-.form-check-input {
-    width: 2.5rem;
-    height: 1.3rem;
-    cursor: pointer;
-}
-
-/* Changement de couleur en mode sombre */
-.dark-mode .form-check-input {
-    background-color: #FFB000 !important;
-    border-color: #FFB000 !important;
-}
-
-/* Transition fluide */
-.form-check-input:checked {
-    background-color: #007bff;
-    border-color: #007bff;
-}
+.
 
 /* Placeholder des Inputs */
 .form-floating > .form-control-plaintext::placeholder,
