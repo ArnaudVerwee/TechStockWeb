@@ -14,6 +14,21 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var userManager = services.GetRequiredService<UserManager<TechStockWebUser>>();
+        var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+        await DatabaseSeeder.SeedAsync(userManager, roleManager);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error when seeding the base: {ex.Message}");
+    }
+}
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

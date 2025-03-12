@@ -22,8 +22,8 @@ namespace TechStockWeb.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
-            var techStock = _context.Product.Include(p => p.Supplier).Include(p => p.TypeArticle);
-            return View(await techStock.ToListAsync());
+            var techStockContext = _context.Product.Include(p => p.Supplier).Include(p => p.TypeArticle);
+            return View(await techStockContext.ToListAsync());
         }
 
         // GET: Products/Details/5

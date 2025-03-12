@@ -12,7 +12,6 @@ public class TechStockContext : IdentityDbContext<TechStockWebUser>
         : base(options)
     {
     }
-    public DbSet<TechStockWeb.Models.User> Users { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -32,3 +31,4 @@ public DbSet<TechStockWeb.Models.Product> Product { get; set; } = default!;
 
 public DbSet<TechStockWeb.Models.MaterialManagement> MaterialManagement { get; set; } = default!;
 }
+

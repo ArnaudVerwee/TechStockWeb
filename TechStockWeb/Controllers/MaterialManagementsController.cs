@@ -22,8 +22,8 @@ namespace TechStockWeb.Controllers
         // GET: MaterialManagements
         public async Task<IActionResult> Index()
         {
-            var techStock = _context.MaterialManagement.Include(m => m.Product).Include(m => m.State).Include(m => m.User);
-            return View(await techStock.ToListAsync());
+            var techStockContext = _context.MaterialManagement.Include(m => m.Product).Include(m => m.State).Include(m => m.User);
+            return View(await techStockContext.ToListAsync());
         }
 
         // GET: MaterialManagements/Details/5

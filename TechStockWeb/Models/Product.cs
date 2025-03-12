@@ -12,11 +12,11 @@ namespace TechStockWeb.Models
 
         [ForeignKey("TypeArticle")]
         public required int TypeId { get; set; }
-        public TypeArticle TypeArticle { get; set; }    
+        public TypeArticle TypeArticle { get; set; }
 
 
         [ForeignKey("Supplier")]
-        public  required int SupplierId { get; set; }
+        public required int SupplierId { get; set; }
         public Supplier Supplier { get; set; }
     }
 }
