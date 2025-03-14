@@ -21,11 +21,33 @@ using (var scope = app.Services.CreateScope())
     {
         var userManager = services.GetRequiredService<UserManager<TechStockWebUser>>();
         var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-        await DatabaseSeeder.SeedAsync(userManager, roleManager);
+
+        // Vérifier si les rôles existent, sinon les créer
+        var roles = new[] { "Admin", "Support", "User" };
+        foreach (var role in roles)
+        {
+            var roleExist = await roleManager.RoleExistsAsync(role);
+            if (!roleExist)
+            {
+                await roleManager.CreateAsync(new IdentityRole(role));
+            }
+        }
+
+        // Attribuer le rôle "User" par défaut à tous les utilisateurs qui n'ont pas encore de rôle
+        var users = await userManager.Users.ToListAsync();
+        foreach (var user in users)
+        {
+            var userRoles = await userManager.GetRolesAsync(user);
+            if (!userRoles.Any())
+            {
+                // Si l'utilisateur n'a aucun rôle, lui attribuer le rôle "User"
+                await userManager.AddToRoleAsync(user, "User");
+            }
+        }
     }
     catch (Exception ex)
     {
-        Console.WriteLine($"Error when seeding the base: {ex.Message}");
+        Console.WriteLine($"Error when seeding the database: {ex.Message}");
     }
 }
 
@@ -47,6 +69,7 @@ app.MapStaticAssets();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
+
     .WithStaticAssets();
 
 app.MapRazorPages()

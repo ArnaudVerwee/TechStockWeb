@@ -1,0 +1,19 @@
+﻿@model TechStockWeb.ViewModels.UserRolesViewModel
+
+@{
+    ViewData["Title"] = "Modifier les rôles";
+}
+
+<h1>Modifier les rôles de @Model.UserName</h1>
+
+<form asp-action="ManageRoles" method="post">
+    <input type="hidden" asp-for="UserName" />
+
+    <div class="form-group">
+        <label>Sélectionner les rôles :</label>
+        <select asp-for="Roles" asp-items="ViewBag.AllRoles" class="form-control" multiple></select>
+    </div>
+
+    <button type="submit" class="btn btn-success">Enregistrer</button>
+    <a asp-action="Index" class="btn btn-secondary">Annuler</a>
+</form>

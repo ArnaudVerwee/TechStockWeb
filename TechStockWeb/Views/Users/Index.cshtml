@@ -1,0 +1,29 @@
+﻿@model IEnumerable<TechStockWeb.ViewModels.UserRolesViewModel>
+
+@{
+    ViewData["Title"] = "Gestion des utilisateurs";
+}
+
+<h1>Gestion des utilisateurs</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nom d'utilisateur</th>
+            <th>Rôles</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@string.Join(", ", user.Roles)</td>
+                <td>
+                    <a asp-action="ManageRoles" asp-route-userName="@user.UserName" class="btn btn-primary">Gérer les rôles</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
