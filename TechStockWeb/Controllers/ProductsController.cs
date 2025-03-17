@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +23,9 @@ namespace TechStockWeb.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
-            var techStockContext = _context.Product.Include(p => p.Supplier).Include(p => p.TypeArticle);
+            var techStockContext = _context.Product
+                .Include(p => p.Supplier)
+                .Include(p => p.TypeArticle);
             return View(await techStockContext.ToListAsync());
         }
 
@@ -49,8 +52,8 @@ namespace TechStockWeb.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
-            ViewData["SupplierId"] = new SelectList(_context.Supplier, "Id", "Id");
-            ViewData["TypeId"] = new SelectList(_context.TypeArticle, "Id", "Id");
+            ViewData["SupplierId"] = new SelectList(_context.Supplier, "Id", "Name");
+            ViewData["TypeId"] = new SelectList(_context.TypeArticle, "Id", "Name");
             return View();
         }
 
@@ -61,14 +64,20 @@ namespace TechStockWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,SerialNumber,TypeId,SupplierId")] Product product)
         {
+            Debug.WriteLine("Méthode Create appelée");
+            Debug.WriteLine("Nom: "+ product.Name);
+            Debug.WriteLine("SerialNumber: " + product.SerialNumber);
+            Debug.WriteLine("TypeID: " + product.TypeId);
+            Debug.WriteLine("SupplierID: " + product.SupplierId);
+            Debug.WriteLine("ID : " + product.Id);
             if (ModelState.IsValid)
             {
                 _context.Add(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SupplierId"] = new SelectList(_context.Supplier, "Id", "Id", product.SupplierId);
-            ViewData["TypeId"] = new SelectList(_context.TypeArticle, "Id", "Id", product.TypeId);
+            ViewData["SupplierId"] = new SelectList(_context.Supplier, "Id", "Name", product.SupplierId);
+            ViewData["TypeId"] = new SelectList(_context.TypeArticle, "Id", "Name", product.TypeId);
             return View(product);
         }
 
@@ -122,8 +131,8 @@ namespace TechStockWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SupplierId"] = new SelectList(_context.Supplier, "Id", "Id", product.SupplierId);
-            ViewData["TypeId"] = new SelectList(_context.TypeArticle, "Id", "Id", product.TypeId);
+            ViewData["SupplierId"] = new SelectList(_context.Supplier, "Id", "Name", product.SupplierId);
+            ViewData["TypeId"] = new SelectList(_context.TypeArticle, "Id", "Name", product.TypeId);
             return View(product);
         }
 
