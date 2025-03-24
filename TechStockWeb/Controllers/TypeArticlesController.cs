@@ -86,7 +86,7 @@ namespace TechStockWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Type")] TypeArticle typeArticle)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] TypeArticle typeArticle)
         {
             if (id != typeArticle.Id)
             {

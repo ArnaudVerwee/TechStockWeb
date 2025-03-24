@@ -21,13 +21,49 @@ namespace TechStockWeb.Controllers
         }
 
         // GET: Products
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string SearchName, string SearchSerialNumber, string SearchType, string SearchSupplier)
         {
-            var techStockContext = _context.Product
+            var products = _context.Product
                 .Include(p => p.Supplier)
-                .Include(p => p.TypeArticle);
-            return View(await techStockContext.ToListAsync());
+                .Include(p => p.TypeArticle)
+                .AsQueryable();
+
+            // Appliquer les filtres si l'utilisateur a saisi des valeurs
+            if (!string.IsNullOrEmpty(SearchName))
+            {
+                products = products.Where(p => p.Name.Contains(SearchName));
+            }
+
+            if (!string.IsNullOrEmpty(SearchSerialNumber))
+            {
+                products = products.Where(p => p.SerialNumber.Contains(SearchSerialNumber));
+            }
+
+            if (!string.IsNullOrEmpty(SearchType))
+            {
+                int typeId = int.Parse(SearchType);
+                products = products.Where(p => p.TypeId == typeId);
+            }
+
+            if (!string.IsNullOrEmpty(SearchSupplier))
+            {
+                int supplierId = int.Parse(SearchSupplier);
+                products = products.Where(p => p.SupplierId == supplierId);
+            }
+
+            // Stocker les valeurs de recherche dans ViewData pour les réafficher
+            ViewData["SearchName"] = SearchName;
+            ViewData["SearchSerialNumber"] = SearchSerialNumber;
+            ViewData["SearchType"] = SearchType;
+            ViewData["SearchSupplier"] = SearchSupplier;
+
+            // Charger les listes déroulantes pour les filtres
+            ViewBag.TypeList = new SelectList(_context.TypeArticle, "Id", "Name");
+            ViewBag.SupplierList = new SelectList(_context.Supplier, "Id", "Name");
+
+            return View(await products.ToListAsync());
         }
+
 
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -70,12 +106,22 @@ namespace TechStockWeb.Controllers
             Debug.WriteLine("TypeID: " + product.TypeId);
             Debug.WriteLine("SupplierID: " + product.SupplierId);
             Debug.WriteLine("ID : " + product.Id);
+            var typeArticle = await _context.TypeArticle.FindAsync(product.TypeId);
+            var supplier = await _context.Supplier.FindAsync(product.SupplierId);
+
+            product.TypeArticle = typeArticle;
+            product.Supplier = supplier;
+
+            ModelState.Remove("TypeArticle");
+            ModelState.Remove("Supplier"); 
+            
             if (ModelState.IsValid)
             {
                 _context.Add(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+ 
             ViewData["SupplierId"] = new SelectList(_context.Supplier, "Id", "Name", product.SupplierId);
             ViewData["TypeId"] = new SelectList(_context.TypeArticle, "Id", "Name", product.TypeId);
             return View(product);
@@ -94,8 +140,8 @@ namespace TechStockWeb.Controllers
             {
                 return NotFound();
             }
-            ViewData["SupplierId"] = new SelectList(_context.Supplier, "Id", "Id", product.SupplierId);
-            ViewData["TypeId"] = new SelectList(_context.TypeArticle, "Id", "Id", product.TypeId);
+            ViewData["SupplierId"] = new SelectList(_context.Supplier, "Id", "Name", product.SupplierId);
+            ViewData["TypeId"] = new SelectList(_context.TypeArticle, "Id", "Name", product.TypeId);
             return View(product);
         }
 
@@ -110,6 +156,18 @@ namespace TechStockWeb.Controllers
             {
                 return NotFound();
             }
+
+            // Récupération des objets TypeArticle et Supplier
+            var typeArticle = await _context.TypeArticle.FindAsync(product.TypeId);
+            var supplier = await _context.Supplier.FindAsync(product.SupplierId);
+
+            // Assigner les objets trouvés
+            product.TypeArticle = typeArticle;
+            product.Supplier = supplier;
+
+            // Supprimer les erreurs de validation liées aux propriétés non bindées
+            ModelState.Remove("TypeArticle");
+            ModelState.Remove("Supplier");
 
             if (ModelState.IsValid)
             {
@@ -131,10 +189,12 @@ namespace TechStockWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["SupplierId"] = new SelectList(_context.Supplier, "Id", "Name", product.SupplierId);
             ViewData["TypeId"] = new SelectList(_context.TypeArticle, "Id", "Name", product.TypeId);
             return View(product);
         }
+
 
         // GET: Products/Delete/5
         public async Task<IActionResult> Delete(int? id)
