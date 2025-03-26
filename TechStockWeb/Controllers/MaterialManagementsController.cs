@@ -22,9 +22,67 @@ namespace TechStockWeb.Controllers
         // GET: MaterialManagements
         public async Task<IActionResult> Index()
         {
-            var techStockContext = _context.MaterialManagement.Include(m => m.Product).Include(m => m.State).Include(m => m.User);
+            var techStockContext = _context.MaterialManagement
+                .Include(m => m.Product)
+                .Include(m => m.State)
+                .Include(m => m.User);
             return View(await techStockContext.ToListAsync());
         }
+
+        // ✅ GET: MaterialManagements/AssignToUser/{id}
+        public async Task<IActionResult> AssignToUser(int id)
+        {
+            var product = await _context.Product.FindAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.Users = await _context.Users.ToListAsync();
+            ViewBag.States = await _context.States.ToListAsync();
+            return View(product);
+        }
+
+        // ✅ POST: MaterialManagements/AssignToUser
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AssignToUser(int id, string userId, int stateId)
+        {
+            var product = await _context.Product.FindAsync(id);
+            var user = await _context.Users.FindAsync(userId);
+            var state = await _context.States.FindAsync(stateId);
+
+            if (product == null || user == null || state == null)
+            {
+                return NotFound();
+            }
+
+            // Vérifier si ce produit est déjà assigné et le supprimer
+            var existingAssignment = await _context.MaterialManagement
+                .FirstOrDefaultAsync(m => m.ProductId == id);
+
+            if (existingAssignment != null)
+            {
+                _context.MaterialManagement.Remove(existingAssignment);
+            }
+
+            // Créer une nouvelle assignation
+            var assignment = new MaterialManagement
+            {
+                ProductId = id,
+                UserId = userId,
+                StateId = stateId,
+                AssignmentDate = DateTime.Now,
+                Signature = "Pending"
+            };
+
+            _context.MaterialManagement.Add(assignment);
+            await _context.SaveChangesAsync();
+
+            // Rediriger vers la page d'index des produits
+            return RedirectToAction("Index", "Products");
+        }
+
 
         // GET: MaterialManagements/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -57,8 +115,6 @@ namespace TechStockWeb.Controllers
         }
 
         // POST: MaterialManagements/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,UserId,ProductId,StateId,Signature,AssignmentDate,SignatureDate")] MaterialManagement materialManagement)
@@ -69,9 +125,6 @@ namespace TechStockWeb.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id", materialManagement.ProductId);
-            ViewData["StateId"] = new SelectList(_context.States, "Id", "Id", materialManagement.StateId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", materialManagement.UserId);
             return View(materialManagement);
         }
 
@@ -88,15 +141,10 @@ namespace TechStockWeb.Controllers
             {
                 return NotFound();
             }
-            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id", materialManagement.ProductId);
-            ViewData["StateId"] = new SelectList(_context.States, "Id", "Id", materialManagement.StateId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", materialManagement.UserId);
             return View(materialManagement);
         }
 
         // POST: MaterialManagements/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,ProductId,StateId,Signature,AssignmentDate,SignatureDate")] MaterialManagement materialManagement)
@@ -126,9 +174,6 @@ namespace TechStockWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id", materialManagement.ProductId);
-            ViewData["StateId"] = new SelectList(_context.States, "Id", "Id", materialManagement.StateId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", materialManagement.UserId);
             return View(materialManagement);
         }
 

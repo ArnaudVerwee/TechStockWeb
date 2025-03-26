@@ -21,14 +21,15 @@ namespace TechStockWeb.Controllers
         }
 
         // GET: Products
-        public async Task<IActionResult> Index(string SearchName, string SearchSerialNumber, string SearchType, string SearchSupplier)
+        public async Task<IActionResult> Index(string SearchName, string SearchSerialNumber, string SearchType, string SearchSupplier, string SearchUser)
         {
+            // Charger les produits de base
             var products = _context.Product
                 .Include(p => p.Supplier)
                 .Include(p => p.TypeArticle)
                 .AsQueryable();
 
-            // Appliquer les filtres si l'utilisateur a saisi des valeurs
+            // Appliquer les filtres
             if (!string.IsNullOrEmpty(SearchName))
             {
                 products = products.Where(p => p.Name.Contains(SearchName));
@@ -41,21 +42,71 @@ namespace TechStockWeb.Controllers
 
             if (!string.IsNullOrEmpty(SearchType))
             {
-                int typeId = int.Parse(SearchType);
-                products = products.Where(p => p.TypeId == typeId);
+                int typeId;
+                if (int.TryParse(SearchType, out typeId)) // Vérifier si SearchType peut être converti en entier
+                {
+                    products = products.Where(p => p.TypeId == typeId);
+                }
+                else
+                {
+                    // Recherche par nom du type d'article si la conversion échoue
+                    products = products.Where(p => p.TypeArticle.Name.Contains(SearchType));
+                }
             }
 
             if (!string.IsNullOrEmpty(SearchSupplier))
             {
-                int supplierId = int.Parse(SearchSupplier);
-                products = products.Where(p => p.SupplierId == supplierId);
+                int supplierId;
+                if (int.TryParse(SearchSupplier, out supplierId)) // Vérifier si SearchSupplier peut être converti en entier
+                {
+                    products = products.Where(p => p.SupplierId == supplierId);
+                }
+                else
+                {
+                    // Recherche par nom du fournisseur si la conversion échoue
+                    products = products.Where(p => p.Supplier.Name.Contains(SearchSupplier));
+                }
             }
+
+            if (!string.IsNullOrEmpty(SearchUser))
+            {
+                if (SearchUser == "NotAssigned")
+                {
+                    // Sélectionner les produits qui n'ont PAS d'assignation
+                    products = from p in products
+                               join m in _context.MaterialManagement on p.Id equals m.ProductId into assignments
+                               from assignment in assignments.DefaultIfEmpty()
+                               where assignment == null
+                               select p;
+                }
+                else
+                {
+                    var userId = SearchUser;
+                    products = from p in products
+                               join m in _context.MaterialManagement on p.Id equals m.ProductId into assignments
+                               from assignment in assignments.DefaultIfEmpty()
+                               where assignment != null && assignment.UserId == userId
+                               select p;
+                }
+            }
+
+
+            // Charger les informations sur l'assignation des utilisateurs
+            var materialAssignments = await _context.MaterialManagement
+                .Include(m => m.User)
+                .ToListAsync();
+
+            // Charger la liste des utilisateurs pour le menu déroulant
+            ViewBag.Users = new SelectList(await _context.Users.ToListAsync(), "Id", "UserName");
+
+            ViewBag.MaterialAssignments = materialAssignments;
 
             // Stocker les valeurs de recherche dans ViewData pour les réafficher
             ViewData["SearchName"] = SearchName;
             ViewData["SearchSerialNumber"] = SearchSerialNumber;
             ViewData["SearchType"] = SearchType;
             ViewData["SearchSupplier"] = SearchSupplier;
+            ViewData["SearchUser"] = SearchUser; // Stockage du filtre utilisateur
 
             // Charger les listes déroulantes pour les filtres
             ViewBag.TypeList = new SelectList(_context.TypeArticle, "Id", "Name");
@@ -63,6 +114,9 @@ namespace TechStockWeb.Controllers
 
             return View(await products.ToListAsync());
         }
+
+
+
 
 
         // GET: Products/Details/5
@@ -235,5 +289,65 @@ namespace TechStockWeb.Controllers
         {
             return _context.Product.Any(e => e.Id == id);
         }
+
+        // Assigner un produit à un utilisateur
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AssignToUser(int id, int userId)
+        {
+            var product = await _context.Product.FindAsync(id);
+            var user = await _context.Users.FindAsync(userId);
+
+            Debug.WriteLine(userId);
+            if (product == null || user == null)
+            {
+                return NotFound();
+            }
+
+            // Vérifier si le produit est déjà assigné
+            var existingAssignment = await _context.MaterialManagement
+                .FirstOrDefaultAsync(m => m.ProductId == id);
+
+            if (existingAssignment != null)
+            {
+                TempData["Error"] = "This product is already assigned to a user.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            // Création de l'assignation
+            var assignment = new MaterialManagement
+            {
+                ProductId = id,
+                //UserId = userId
+            };
+
+            _context.MaterialManagement.Add(assignment);
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = "Product assigned successfully.";
+            return RedirectToAction(nameof(Index));
+        }
+
+        // Désassigner un produit d'un utilisateur
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UnassignFromUser(int id)
+        {
+            var assignment = await _context.MaterialManagement
+                .FirstOrDefaultAsync(m => m.ProductId == id);
+
+            if (assignment == null)
+            {
+                TempData["Error"] = "This product is not assigned to any user.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            _context.MaterialManagement.Remove(assignment);
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = "Product unassigned successfully.";
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }

@@ -1,8 +1,9 @@
-using Microsoft.EntityFrameworkCore;
+ï»¿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using TechStockWeb.Data;
 using Microsoft.AspNetCore.Identity;
 using TechStockWeb.Areas.Identity.Data;
+using TechStockWeb.Models;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<TechStockContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("TechStock") ?? throw new InvalidOperationException("Connection string 'TechStock' not found.")));
@@ -21,8 +22,9 @@ using (var scope = app.Services.CreateScope())
     {
         var userManager = services.GetRequiredService<UserManager<TechStockWebUser>>();
         var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+        var dbContext = services.GetRequiredService<TechStockContext>();
 
-        // Vérifier si les rôles existent, sinon les créer
+        // VÃ©rifier si les rÃ´les existent, sinon les crÃ©er
         var roles = new[] { "Admin", "Support", "User" };
         foreach (var role in roles)
         {
@@ -33,16 +35,30 @@ using (var scope = app.Services.CreateScope())
             }
         }
 
-        // Attribuer le rôle "User" par défaut à tous les utilisateurs qui n'ont pas encore de rôle
+        // Attribuer le rÃ´le "User" par dÃ©faut Ã  tous les utilisateurs qui n'ont pas encore de rÃ´le
         var users = await userManager.Users.ToListAsync();
         foreach (var user in users)
         {
             var userRoles = await userManager.GetRolesAsync(user);
             if (!userRoles.Any())
             {
-                // Si l'utilisateur n'a aucun rôle, lui attribuer le rôle "User"
                 await userManager.AddToRoleAsync(user, "User");
             }
+        }
+
+        // âœ… Ajouter les statuts Ã  la base de donnÃ©es s'ils n'existent pas
+        if (!dbContext.States.Any())
+        {
+            dbContext.States.AddRange(new List<States>
+            {
+                new States { Status = "New Product" },
+                new States { Status = "Old Product" },
+                new States { Status = "Product to repair" },
+                new States { Status = "Broken Product" }
+            });
+
+            await dbContext.SaveChangesAsync();
+            Console.WriteLine("Default states added successfully.");
         }
     }
     catch (Exception ex)
@@ -50,6 +66,7 @@ using (var scope = app.Services.CreateScope())
         Console.WriteLine($"Error when seeding the database: {ex.Message}");
     }
 }
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

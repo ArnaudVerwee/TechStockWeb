@@ -1,0 +1,36 @@
+﻿@model TechStockWeb.Models.Product
+
+@{
+    ViewData["Title"] = "Assign Product to User";
+}
+
+<h2>Assign Product to User</h2>
+
+<p>Product: <strong>@Model.Name</strong></p>
+<p>Serial Number: <strong>@Model.SerialNumber</strong></p>
+
+<form asp-controller="MaterialManagements" asp-action="AssignToUser" method="post">
+    <input type="hidden" name="id" value="@Model.Id" />
+
+    <!-- Sélection de l'utilisateur -->
+    <label for="userId">Select User:</label>
+    <select name="userId" class="form-control">
+        @foreach (var user in ViewBag.Users)
+        {
+            <option value="@user.Id">@user.UserName</option>
+        }
+    </select>
+
+    <!-- ✅ Ajout de la sélection de l'état -->
+    <label for="stateId" class="mt-2">Select Product State:</label>
+    <select name="stateId" class="form-control">
+        @foreach (var state in ViewBag.States)
+        {
+            <option value="@state.Id">@state.Status</option>
+        }
+    </select>
+
+    <button type="submit" class="btn btn-primary mt-2">Assign</button>
+</form>
+
+<a asp-action="Index" class="btn btn-secondary mt-3">Back to List</a>
