@@ -2,24 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TechStockWeb.Data;
 using TechStockWeb.Models;
+using TechStockWeb.Areas.Identity.Data;
 
 namespace TechStockWeb.Controllers
 {
+    [Authorize]
     public class MaterialManagementsController : Controller
     {
         private readonly TechStockContext _context;
+        private readonly UserManager<TechStockWebUser> _userManager;
 
-        public MaterialManagementsController(TechStockContext context)
+        public MaterialManagementsController(TechStockContext context, UserManager<TechStockWebUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
-        // GET: MaterialManagements
+        // ✅ Liste complète des assignations (Admin)
         public async Task<IActionResult> Index()
         {
             var techStockContext = _context.MaterialManagement
@@ -29,7 +35,80 @@ namespace TechStockWeb.Controllers
             return View(await techStockContext.ToListAsync());
         }
 
-        // ✅ GET: MaterialManagements/AssignToUser/{id}
+        // ✅ Affiche les produits assignés à l'utilisateur connecté
+        public async Task<IActionResult> MyAssignedProducts()
+        {
+            var userId = _userManager.GetUserId(User);
+            var assignedProducts = await _context.MaterialManagement
+                .Include(m => m.Product)
+                .Include(m => m.State)
+                .Where(m => m.UserId == userId)
+                .ToListAsync();
+
+            return View(assignedProducts);
+        }
+
+        // ✅ GET: Page de signature pour un produit
+        public async Task<IActionResult> SignProduct(int id)
+        {
+            var assignment = await _context.MaterialManagement
+                .Include(m => m.Product)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (assignment == null || assignment.UserId != _userManager.GetUserId(User))
+            {
+                return NotFound();
+            }
+
+            return View(assignment);
+        }
+
+        // ✅ POST: Enregistrement de la signature
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SignProduct(int id, string signature)
+        {
+            var assignment = await _context.MaterialManagement.FindAsync(id);
+            if (assignment == null || assignment.UserId != _userManager.GetUserId(User))
+            {
+                return NotFound();
+            }
+
+            assignment.Signature = signature;
+            assignment.SignatureDate = DateTime.Now;
+
+            _context.Update(assignment);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(MyAssignedProducts));
+        }
+
+        // ✅ POST: Sauvegarder la signature via formulaire
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SaveSignature(int id, string signature)
+        {
+            if (string.IsNullOrEmpty(signature))
+            {
+                return BadRequest("Signature is required.");
+            }
+
+            var assignment = await _context.MaterialManagement.FindAsync(id);
+            if (assignment == null || assignment.UserId != _userManager.GetUserId(User))
+            {
+                return NotFound();
+            }
+
+            assignment.Signature = signature;
+            assignment.SignatureDate = DateTime.Now;
+
+            _context.Update(assignment);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(MyAssignedProducts));
+        }
+
+        // ✅ GET: Assigner un produit à un utilisateur
         public async Task<IActionResult> AssignToUser(int id)
         {
             var product = await _context.Product.FindAsync(id);
@@ -43,7 +122,7 @@ namespace TechStockWeb.Controllers
             return View(product);
         }
 
-        // ✅ POST: MaterialManagements/AssignToUser
+        // ✅ POST: Assigner un produit
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AssignToUser(int id, string userId, int stateId)
@@ -57,7 +136,6 @@ namespace TechStockWeb.Controllers
                 return NotFound();
             }
 
-            // Vérifier si ce produit est déjà assigné et le supprimer
             var existingAssignment = await _context.MaterialManagement
                 .FirstOrDefaultAsync(m => m.ProductId == id);
 
@@ -66,25 +144,22 @@ namespace TechStockWeb.Controllers
                 _context.MaterialManagement.Remove(existingAssignment);
             }
 
-            // Créer une nouvelle assignation
             var assignment = new MaterialManagement
             {
                 ProductId = id,
                 UserId = userId,
                 StateId = stateId,
                 AssignmentDate = DateTime.Now,
-                Signature = "Pending"
+                Signature = null
             };
 
             _context.MaterialManagement.Add(assignment);
             await _context.SaveChangesAsync();
 
-            // Rediriger vers la page d'index des produits
             return RedirectToAction("Index", "Products");
         }
 
-
-        // GET: MaterialManagements/Details/5
+        // ✅ GET: Affiche les détails d'une assignation
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -105,30 +180,7 @@ namespace TechStockWeb.Controllers
             return View(materialManagement);
         }
 
-        // GET: MaterialManagements/Create
-        public IActionResult Create()
-        {
-            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id");
-            ViewData["StateId"] = new SelectList(_context.States, "Id", "Id");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
-            return View();
-        }
-
-        // POST: MaterialManagements/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UserId,ProductId,StateId,Signature,AssignmentDate,SignatureDate")] MaterialManagement materialManagement)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(materialManagement);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(materialManagement);
-        }
-
-        // GET: MaterialManagements/Edit/5
+        // ✅ GET: Modifier une assignation
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -144,7 +196,7 @@ namespace TechStockWeb.Controllers
             return View(materialManagement);
         }
 
-        // POST: MaterialManagements/Edit/5
+        // ✅ POST: Modifier une assignation
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,ProductId,StateId,Signature,AssignmentDate,SignatureDate")] MaterialManagement materialManagement)
@@ -177,7 +229,7 @@ namespace TechStockWeb.Controllers
             return View(materialManagement);
         }
 
-        // GET: MaterialManagements/Delete/5
+        // ✅ GET: Supprimer une assignation
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -198,7 +250,7 @@ namespace TechStockWeb.Controllers
             return View(materialManagement);
         }
 
-        // POST: MaterialManagements/Delete/5
+        // ✅ POST: Confirmer la suppression
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -213,6 +265,7 @@ namespace TechStockWeb.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // ✅ Vérifier si un produit est assigné
         private bool MaterialManagementExists(int id)
         {
             return _context.MaterialManagement.Any(e => e.Id == id);

@@ -1,0 +1,45 @@
+﻿@model List<TechStockWeb.Models.MaterialManagement>
+
+@{
+    ViewData["Title"] = "My Assigned Products";
+}
+
+<h1>My Assigned Products</h1>
+
+<table class="table">
+    <tr>
+        <th>Product</th>
+        <th>State</th>
+        <th>Assigned Date</th>
+        <th>Signature</th>
+        <th>Action</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Product.Name</td>
+            <td>@item.State.Status</td>
+            <td>@item.AssignmentDate.ToString("yyyy-MM-dd")</td>
+            <td>
+                @if (string.IsNullOrEmpty(item.Signature) || item.Signature == "Pending")
+                {
+                    <span class="text-muted">Not Signed</span>
+                }
+                else
+                {
+                    <img src="@item.Signature" alt="Signature" width="100" />
+                }
+            </td>
+            <td>
+                @if (string.IsNullOrEmpty(item.Signature) || item.Signature == "Pending")
+                {
+                    <a asp-action="SignProduct" asp-route-id="@item.Id" class="btn btn-primary">Sign</a>
+                }
+                else
+                {
+                    <span class="text-success">Signed</span>
+                }
+            </td>
+        </tr>
+    }
+</table>

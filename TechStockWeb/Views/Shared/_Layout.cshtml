@@ -40,6 +40,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="TypeArticles" asp-action="Index">Item types</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="MaterialManagements" asp-action="MyAssignedProducts">
+                                <i class="bi bi-clipboard-check"></i> My Assigned Products
+                            </a>
+                        </li>
+
+
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
