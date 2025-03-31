@@ -24,7 +24,7 @@ namespace TechStockWeb.Controllers
         public async Task<IActionResult> Index(string SearchName, string SearchSerialNumber, string SearchType, string SearchSupplier, string SearchUser)
         {
             // Charger les produits de base
-            var products = _context.Product
+            var products = _context.Products
                 .Include(p => p.Supplier)
                 .Include(p => p.TypeArticle)
                 .AsQueryable();
@@ -127,7 +127,7 @@ namespace TechStockWeb.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Product
+            var product = await _context.Products
                 .Include(p => p.Supplier)
                 .Include(p => p.TypeArticle)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -189,7 +189,7 @@ namespace TechStockWeb.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Product.FindAsync(id);
+            var product = await _context.Products.FindAsync(id);
             if (product == null)
             {
                 return NotFound();
@@ -258,7 +258,7 @@ namespace TechStockWeb.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Product
+            var product = await _context.Products
                 .Include(p => p.Supplier)
                 .Include(p => p.TypeArticle)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -275,10 +275,10 @@ namespace TechStockWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var product = await _context.Product.FindAsync(id);
+            var product = await _context.Products.FindAsync(id);
             if (product != null)
             {
-                _context.Product.Remove(product);
+                _context.Products.Remove(product);
             }
 
             await _context.SaveChangesAsync();
@@ -287,7 +287,7 @@ namespace TechStockWeb.Controllers
 
         private bool ProductExists(int id)
         {
-            return _context.Product.Any(e => e.Id == id);
+            return _context.Products.Any(e => e.Id == id);
         }
 
         // Assigner un produit à un utilisateur
@@ -295,7 +295,7 @@ namespace TechStockWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AssignToUser(int id, int userId)
         {
-            var product = await _context.Product.FindAsync(id);
+            var product = await _context.Products.FindAsync(id);
             var user = await _context.Users.FindAsync(userId);
 
             Debug.WriteLine(userId);

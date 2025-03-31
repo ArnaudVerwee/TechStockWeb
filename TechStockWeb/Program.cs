@@ -1,20 +1,52 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Localization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System.Globalization;
 using TechStockWeb.Data;
 using Microsoft.AspNetCore.Identity;
 using TechStockWeb.Areas.Identity.Data;
 using TechStockWeb.Models;
+using Microsoft.Extensions.Options;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// --- Support de la localisation ---
+builder.Services.AddLocalization(options => options.ResourcesPath = "LanguageResources");
+
+// --- Configuration de la base de données et de l'identité ---
 builder.Services.AddDbContext<TechStockContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("TechStock") ?? throw new InvalidOperationException("Connection string 'TechStock' not found.")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("TechStock")
+    ?? throw new InvalidOperationException("Connection string 'TechStock' not found.")));
 
-builder.Services.AddDefaultIdentity<TechStockWebUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>().AddEntityFrameworkStores<TechStockContext>();
+builder.Services.AddDefaultIdentity<TechStockWebUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<TechStockContext>();
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
+// --- Ajout du support de la localisation dans les vues et contrôleurs ---
+builder.Services.AddControllersWithViews()
+    .AddViewLocalization(Microsoft.AspNetCore.Mvc.Razor.LanguageViewLocationExpanderFormat.Suffix)
+    .AddDataAnnotationsLocalization();
 
 var app = builder.Build();
 
+// --- Définition des cultures supportées ---
+var supportedCultures = new[]
+{
+    new CultureInfo("en"),
+    new CultureInfo("fr"),
+    new CultureInfo("nl")
+};
+
+var localizationOptions = new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture("en"), // Langue par défaut
+    SupportedCultures = supportedCultures,
+    SupportedUICultures = supportedCultures
+};
+
+app.UseRequestLocalization(localizationOptions);
+
+// --- Seed de la base de données et configuration d'identité ---
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -24,7 +56,7 @@ using (var scope = app.Services.CreateScope())
         var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
         var dbContext = services.GetRequiredService<TechStockContext>();
 
-        // Vérifier si les rôles existent, sinon les créer
+        // Création des rôles si non existants
         var roles = new[] { "Admin", "Support", "User" };
         foreach (var role in roles)
         {
@@ -35,7 +67,7 @@ using (var scope = app.Services.CreateScope())
             }
         }
 
-        // Attribuer le rôle "User" par défaut à tous les utilisateurs qui n'ont pas encore de rôle
+        // Attribuer le rôle "User" par défaut aux utilisateurs sans rôle
         var users = await userManager.Users.ToListAsync();
         foreach (var user in users)
         {
@@ -46,7 +78,7 @@ using (var scope = app.Services.CreateScope())
             }
         }
 
-        // ✅ Ajouter les statuts à la base de données s'ils n'existent pas
+        // Ajouter les statuts (States) s'ils n'existent pas
         if (!dbContext.States.Any())
         {
             dbContext.States.AddRange(new List<States>
@@ -67,29 +99,21 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-
-// Configure the HTTP request pipeline.
+// --- Pipeline HTTP ---
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseRouting();
-
 app.UseAuthorization();
-
-app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
-
-    .WithStaticAssets();
-
-app.MapRazorPages()
-.WithStaticAssets();
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapRazorPages();
 
 app.Run();

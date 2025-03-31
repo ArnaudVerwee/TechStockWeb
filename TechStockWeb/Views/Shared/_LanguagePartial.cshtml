@@ -1,0 +1,32 @@
+﻿@using Microsoft.AspNetCore.Localization
+@using System.Globalization
+
+<form asp-controller="Languages" asp-action="ChangeLanguage" method="get" id="languageForm">
+    <select name="id" id="languageSelect" class="form-select form-select-sm" onchange="this.form.submit();">
+        @if (CultureInfo.CurrentCulture.Name.StartsWith("en"))
+        {
+            <option value="en" selected>English</option>
+        }
+        else
+        {
+            <option value="en">English</option>
+        }
+        @if (CultureInfo.CurrentCulture.Name.StartsWith("fr"))
+        {
+            <option value="fr" selected>Français</option>
+        }
+        else
+        {
+            <option value="fr">Français</option>
+        }
+        @if (CultureInfo.CurrentCulture.Name.StartsWith("nl"))
+        {
+            <option value="nl" selected>Nederlands</option>
+        }
+        else
+        {
+            <option value="nl">Nederlands</option>
+        }
+    </select>
+    <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
+</form>

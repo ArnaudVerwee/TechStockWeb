@@ -111,7 +111,7 @@ namespace TechStockWeb.Controllers
         // ✅ GET: Assigner un produit à un utilisateur
         public async Task<IActionResult> AssignToUser(int id)
         {
-            var product = await _context.Product.FindAsync(id);
+            var product = await _context.Products.FindAsync(id);
             if (product == null)
             {
                 return NotFound();
@@ -127,7 +127,7 @@ namespace TechStockWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AssignToUser(int id, string userId, int stateId)
         {
-            var product = await _context.Product.FindAsync(id);
+            var product = await _context.Products.FindAsync(id);
             var user = await _context.Users.FindAsync(userId);
             var state = await _context.States.FindAsync(stateId);
 
@@ -150,7 +150,7 @@ namespace TechStockWeb.Controllers
                 UserId = userId,
                 StateId = stateId,
                 AssignmentDate = DateTime.Now,
-                Signature = null
+                Signature = ""
             };
 
             _context.MaterialManagement.Add(assignment);

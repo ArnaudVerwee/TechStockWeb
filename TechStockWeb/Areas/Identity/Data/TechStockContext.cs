@@ -27,7 +27,7 @@ public DbSet<TechStockWeb.Models.Supplier> Supplier { get; set; } = default!;
 
 public DbSet<TechStockWeb.Models.States> States { get; set; } = default!;
 
-public DbSet<TechStockWeb.Models.Product> Product { get; set; } = default!;
+public DbSet<TechStockWeb.Models.Product> Products { get; set; } = default!;
 
 public DbSet<TechStockWeb.Models.MaterialManagement> MaterialManagement { get; set; } = default!;
 }
