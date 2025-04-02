@@ -6,9 +6,7 @@
 @using TechStockWeb.Resources
 
 @inject IStringLocalizer<SharedResource> _localizer
-
 @inject IStringLocalizer<SharedResource> StringLocalizer
-
 
 <html lang="en">
 <head>
@@ -24,7 +22,9 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TechStockWeb</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="bi bi-house-door"></i> TechStockWeb
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -33,20 +33,26 @@
                     <ul class="navbar-nav flex-grow-1">
                         @if (User.IsInRole("Admin") || User.IsInRole("Support"))
                         {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["Home"]</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">@Localizer["Privacy"]</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">
-                                <i class="bi bi-box"></i> @Localizer["Products"]
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Suppliers" asp-action="Index">@Localizer["Suppliers"]</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">
+                                    <i class="bi bi-house"></i> @Localizer["Home"]
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">
+                                    <i class="bi bi-shield-lock"></i> @Localizer["Privacy"]
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">
+                                    <i class="bi bi-box-seam"></i> @Localizer["Products"]
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Suppliers" asp-action="Index">
+                                    <i class="bi bi-truck"></i> @Localizer["Suppliers"]
+                                </a>
+                            </li>
                         }
                         @if (User.Identity!.IsAuthenticated)
                         {
@@ -56,14 +62,14 @@
                                 </a>
                             </li>
                         }
-
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Users" asp-action="Index">@Localizer["Users"]</a>
+                                <a class="nav-link text-dark" asp-controller="Users" asp-action="Index">
+                                    <i class="bi bi-people"></i> @Localizer["Users"]
+                                </a>
                             </li>
                         }
-
                     </ul>
 
                     <partial name="_LoginPartial" />
@@ -72,17 +78,10 @@
                 </div>
             </div>
         </nav>
-        <p>Test accès ressources : @StringLocalizer["Home"]</p>
-        <p>Culture active : @CultureInfo.CurrentUICulture.Name</p>
-        <p>Langue actuelle : @CultureInfo.CurrentCulture.Name</p>
-        <p>Test traduction Home : @Localizer["Home"]</p>
-        <p>Test traduction Privacy : @Localizer["Privacy"]</p>
-        <p>Test alternative Privacy : @_localizer["Privacy"]</p>
 
         <div class="container">
     </header>
-    <p>Langue actuelle : @CultureInfo.CurrentCulture.Name</p>
-    <p>Test traduction : @_localizer["TestKey"]</p>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -99,7 +98,6 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
-    <!-- Script pour éviter de recharger la page si la langue ne change pas -->
     <script>
         document.getElementById('languageSelect').addEventListener('change', function () {
             let selectedLang = this.value;

@@ -1,17 +1,19 @@
 ﻿@model IEnumerable<TechStockWeb.ViewModels.UserRolesViewModel>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 @{
-    ViewData["Title"] = "Gestion des utilisateurs";
+    ViewData["Title"] = Localizer["User Management"];
 }
 
-<h1>User management</h1>
+<h1>@Localizer["User Management"]</h1>
 
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Nom d'utilisateur</th>
-            <th>Rôles</th>
-            <th>Actions</th>
+            <th>@Localizer["Username"]</th>
+            <th>@Localizer["Roles"]</th>
+            <th>@Localizer["Actions"]</th>
         </tr>
     </thead>
     <tbody>
@@ -21,7 +23,9 @@
                 <td>@user.UserName</td>
                 <td>@string.Join(", ", user.Roles)</td>
                 <td>
-                    <a asp-action="ManageRoles" asp-route-userName="@user.UserName" class="btn btn-primary">Gérer les rôles</a>
+                    <a asp-action="ManageRoles" asp-route-userName="@user.UserName" class="btn btn-primary">
+                        @Localizer["Manage Roles"]
+                    </a>
                 </td>
             </tr>
         }

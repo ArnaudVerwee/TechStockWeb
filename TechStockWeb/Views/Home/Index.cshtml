@@ -1,42 +1,45 @@
 ﻿@{
-    ViewData["Title"] = "Dashboard";
+    ViewData["Title"] = Localizer["Dashboard"];
 }
 
 @if (User.Identity!.IsAuthenticated)
 {
-    <h1 class="mt-4">📊 Tableau de bord</h1>
+    <h1 class="mt-4">📊 @Localizer["Dashboard"]</h1>
 
-    <!-- Affichage du total des produits -->
     <h2 id="totalProducts" class="mt-3 text-primary"></h2>
 
-    <!-- Pie Chart pour Assigné / Non Assigné -->
-    <div style="width:300px">
-        <canvas id="productChart" class="chart-size"></canvas>
+    
+    <div class="d-flex flex-wrap justify-content-center gap-4 mt-4">
+        <div style="max-width:400px">
+            <canvas id="productChart" class="chart-size"></canvas>
+        </div>
+
+        <div>
+            <h3 class="mt-4 text-center">📊 @Localizer["User Performance"]</h3>
+            <div style="max-width:400px">
+                <canvas id="userPerformanceChart" class="chart-size"></canvas>
+            </div>
+        </div>
     </div>
 
-    <!-- Graphique Performance Utilisateur -->
-    <h3 class="mt-4">📊 Performance des Utilisateurs</h3>
-    <div style="width:300px">
-        <canvas id="userPerformanceChart" class="chart-size"></canvas>
-    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
         $(document).ready(function () {
-            // Charger les statistiques des produits
+            
             $.ajax({
                 url: '/Home/GetProductStats',
                 type: 'GET',
                 success: function (data) {
-                    $("#totalProducts").text(`📦 Total Produits: ${data.totalProducts}`);
+                    $("#totalProducts").text(`📦 @Localizer["Total Products"]: ${data.totalProducts}`);
 
                     let ctx = document.getElementById('productChart').getContext('2d');
                     new Chart(ctx, {
                         type: 'pie',
                         data: {
-                            labels: ['Assignés', 'Non Assignés'],
+                            labels: ['@Localizer["Assigned"]', '@Localizer["Unassigned"]'],
                             datasets: [{
                                 data: [data.assignedProducts, data.unassignedProducts],
                                 backgroundColor: ['#4CAF50', '#F44336']
@@ -49,7 +52,7 @@
                     });
                 },
                 error: function () {
-                    alert("Erreur lors du chargement des statistiques des produits.");
+                    alert("@Localizer["Error loading product statistics."]");
                 }
             });
 
@@ -67,7 +70,7 @@
                         data: {
                             labels: labels,
                             datasets: [{
-                                label: 'Produits reçus',
+                                label: '@Localizer["Products Received"]',
                                 data: values,
                                 backgroundColor: 'rgba(54, 162, 235, 0.5)',
                                 borderColor: 'rgba(54, 162, 235, 1)',
@@ -85,10 +88,9 @@
                     });
                 },
                 error: function () {
-                    alert("Erreur lors du chargement des performances des utilisateurs.");
+                    alert("@Localizer["Error loading user performance."]");
                 }
             });
         });
     </script>
 }
-

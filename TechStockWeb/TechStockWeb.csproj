@@ -29,10 +29,7 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="Resources\Areas\Identity\Pages\Account\" />
     <Folder Include="Resources\Models\" />
-    <Folder Include="Resources\Views\Home\" />
-    <Folder Include="Resources\Views\Users\" />
   </ItemGroup>
 
 </Project>
