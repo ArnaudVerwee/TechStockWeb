@@ -7,11 +7,25 @@ using Microsoft.AspNetCore.Identity;
 using TechStockWeb.Areas.Identity.Data;
 using TechStockWeb.Models;
 using Microsoft.Extensions.Options;
+using System.Diagnostics;
+using System.Reflection;
+using Microsoft.Extensions.Localization;
+using TechStockWeb.Resources;
+using TechStockWeb.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// --- Support de la localisation ---
-builder.Services.AddLocalization(options => options.ResourcesPath = "LanguageResources");
+// --- Configuration des services de localisation ---
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+var assembly = Assembly.GetExecutingAssembly();
+Debug.WriteLine($"🔍 Assembly en cours : {assembly.FullName}");
+
+var resourceNames = assembly.GetManifestResourceNames();
+foreach (var name in resourceNames)
+{
+    Debug.WriteLine($"📂 Ressource trouvée : {name}");
+}
 
 // --- Configuration de la base de données et de l'identité ---
 builder.Services.AddDbContext<TechStockContext>(options =>
@@ -27,9 +41,14 @@ builder.Services.AddControllersWithViews()
     .AddViewLocalization(Microsoft.AspNetCore.Mvc.Razor.LanguageViewLocationExpanderFormat.Suffix)
     .AddDataAnnotationsLocalization();
 
-var app = builder.Build();
+builder.Services.AddSingleton<IStringLocalizerFactory, ResourceManagerStringLocalizerFactory>();
+builder.Services.AddSingleton<IStringLocalizer>(provider =>
+{
+    var factory = provider.GetRequiredService<IStringLocalizerFactory>();
+    return factory.Create(typeof(SharedResource));
+});
 
-// --- Définition des cultures supportées ---
+// --- Configuration des options de localisation ---
 var supportedCultures = new[]
 {
     new CultureInfo("en"),
@@ -37,16 +56,28 @@ var supportedCultures = new[]
     new CultureInfo("nl")
 };
 
-var localizationOptions = new RequestLocalizationOptions
+builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
-    DefaultRequestCulture = new RequestCulture("en"), // Langue par défaut
-    SupportedCultures = supportedCultures,
-    SupportedUICultures = supportedCultures
-};
+    var supportedCultures = new[] { "en", "fr", "nl" };
+    options.DefaultRequestCulture = new RequestCulture("en");
+    options.SupportedCultures = supportedCultures.Select(c => new CultureInfo(c)).ToArray();
+    options.SupportedUICultures = supportedCultures.Select(c => new CultureInfo(c)).ToArray();
+});
 
+// --- Configuration de l'email ---
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+builder.Services.AddTransient<IEmailSender, EmailSender>();
+
+builder.Logging.AddConsole();
+builder.Logging.SetMinimumLevel(LogLevel.Debug);
+
+var app = builder.Build();
+
+// --- Middleware de gestion des cultures ---
+var localizationOptions = app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value;
 app.UseRequestLocalization(localizationOptions);
 
-// --- Seed de la base de données et configuration d'identité ---
+// --- Initialisation de la base de données et des rôles ---
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -56,46 +87,12 @@ using (var scope = app.Services.CreateScope())
         var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
         var dbContext = services.GetRequiredService<TechStockContext>();
 
-        // Création des rôles si non existants
-        var roles = new[] { "Admin", "Support", "User" };
-        foreach (var role in roles)
-        {
-            var roleExist = await roleManager.RoleExistsAsync(role);
-            if (!roleExist)
-            {
-                await roleManager.CreateAsync(new IdentityRole(role));
-            }
-        }
-
-        // Attribuer le rôle "User" par défaut aux utilisateurs sans rôle
-        var users = await userManager.Users.ToListAsync();
-        foreach (var user in users)
-        {
-            var userRoles = await userManager.GetRolesAsync(user);
-            if (!userRoles.Any())
-            {
-                await userManager.AddToRoleAsync(user, "User");
-            }
-        }
-
-        // Ajouter les statuts (States) s'ils n'existent pas
-        if (!dbContext.States.Any())
-        {
-            dbContext.States.AddRange(new List<States>
-            {
-                new States { Status = "New Product" },
-                new States { Status = "Old Product" },
-                new States { Status = "Product to repair" },
-                new States { Status = "Broken Product" }
-            });
-
-            await dbContext.SaveChangesAsync();
-            Console.WriteLine("Default states added successfully.");
-        }
+        await SeedRolesAndUsers(roleManager, userManager);
+        await SeedStates(dbContext);
     }
     catch (Exception ex)
     {
-        Console.WriteLine($"Error when seeding the database: {ex.Message}");
+        Debug.WriteLine($"❌ Erreur lors du seed de la base de données : {ex.Message}");
     }
 }
 
@@ -117,3 +114,44 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
+
+// --- Fonctions auxiliaires ---
+static async Task SeedRolesAndUsers(RoleManager<IdentityRole> roleManager, UserManager<TechStockWebUser> userManager)
+{
+    string[] roles = { "Admin", "Support", "User" };
+
+    foreach (var role in roles)
+    {
+        if (!await roleManager.RoleExistsAsync(role))
+        {
+            await roleManager.CreateAsync(new IdentityRole(role));
+        }
+    }
+
+    var users = await userManager.Users.ToListAsync();
+    foreach (var user in users)
+    {
+        var userRoles = await userManager.GetRolesAsync(user);
+        if (!userRoles.Any())
+        {
+            await userManager.AddToRoleAsync(user, "User");
+        }
+    }
+}
+
+static async Task SeedStates(TechStockContext dbContext)
+{
+    if (!dbContext.States.Any())
+    {
+        dbContext.States.AddRange(new List<States>
+        {
+            new States { Status = "New Product" },
+            new States { Status = "Old Product" },
+            new States { Status = "Product to repair" },
+            new States { Status = "Broken Product" }
+        });
+
+        await dbContext.SaveChangesAsync();
+        Debug.WriteLine("✅ États par défaut ajoutés avec succès.");
+    }
+}

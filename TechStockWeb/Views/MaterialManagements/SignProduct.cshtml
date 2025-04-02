@@ -1,23 +1,25 @@
 ﻿@model TechStockWeb.Models.MaterialManagement
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 @{
-    ViewData["Title"] = "Sign Product";
+    ViewData["Title"] = Localizer["Sign Product"];
 }
 
-<h1>Sign Product</h1>
+<h1>@Localizer["Sign Product"]</h1>
 
-<p><strong>Product:</strong> @Model.Product.Name</p>
+<p><strong>@Localizer["Product"]:</strong> @Model.Product.Name</p>
 
 <!-- Zone de signature -->
 <canvas id="signatureCanvas" width="400" height="200" style="border:1px solid #000;"></canvas>
 <br>
-<button type="button" class="btn btn-warning" onclick="clearCanvas()">Clear</button>
+<button type="button" class="btn btn-warning" onclick="clearCanvas()">@Localizer["Clear"]</button>
 
 <!-- Formulaire d'envoi -->
 <form method="post" asp-action="SaveSignature">
     <input type="hidden" name="id" value="@Model.Id" />
     <input type="hidden" id="signatureData" name="signature" />
-    <button type="submit" class="btn btn-success" onclick="saveSignature()">Submit Signature</button>
+    <button type="submit" class="btn btn-success" onclick="saveSignature()">@Localizer["Submit Signature"]</button>
 </form>
 
 <script>

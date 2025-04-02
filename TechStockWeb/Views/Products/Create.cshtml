@@ -1,12 +1,16 @@
 ﻿@model TechStockWeb.Models.Product
-
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@using Microsoft.Extensions.Localization
+@using System.Globalization
+@using TechStockWeb.Resources
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>@Localizer["Create"]</h1>
 
-<h4>Product</h4>
+<h4>@Localizer["Product"]</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -17,41 +21,41 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label">@Localizer["Name"]</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SerialNumber" class="control-label"></label>
+                <label asp-for="SerialNumber" class="control-label">@Localizer["SerialNumber"]</label>
                 <input asp-for="SerialNumber" class="form-control" />
                 <span asp-validation-for="SerialNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TypeId" class="control-label"></label>
+                <label asp-for="TypeId" class="control-label">@Localizer["TypeId"]</label>
                 <select asp-for="TypeId" class="form-control"
                         asp-items="@(ViewData["TypeId"] as SelectList)">
-                    <option value="">-- Sélectionner un type --</option>
+                    <option value="">@Localizer["SelectType"]</option>
                 </select>
                 <span asp-validation-for="TypeId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SupplierId" class="control-label"></label>
+                <label asp-for="SupplierId" class="control-label">@Localizer["SupplierId"]</label>
                 <select asp-for="SupplierId" class="form-control"
                         asp-items="@(ViewData["SupplierId"] as SelectList)">
-                    <option value="">-- Sélectionner un fournisseur --</option>
+                    <option value="">@Localizer["SelectSupplier"]</option>
                 </select>
                 <span asp-validation-for="SupplierId" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="@Localizer["Create"]" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">@Localizer["BackToList"]</a>
 </div>
 
 @section Scripts {

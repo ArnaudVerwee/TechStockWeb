@@ -118,12 +118,21 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Home" xml:space="preserve">
-    <value>Home</value>
+    <value>Startpagina</value>
   </data>
-  <data name="Products" xml:space="preserve">
-    <value>Products</value>
+  <data name="Privacy" xml:space="preserve">
+    <value>Privacy</value>
   </data>
-  <data name="Suppliers" xml:space="preserve">
-    <value>Suppliers</value>
-  </data>
+<data name="Products" xml:space="preserve">
+    <value>Producten</value>
+</data>
+<data name="Suppliers" xml:space="preserve">
+    <value>Leveranciers</value>
+</data>
+<data name="My Assigned Products" xml:space="preserve">
+    <value>Mijn toegewezen producten</value>
+</data>
+<data name="Users" xml:space="preserve">
+    <value>Gebruikers</value>
+</data>
 </root>

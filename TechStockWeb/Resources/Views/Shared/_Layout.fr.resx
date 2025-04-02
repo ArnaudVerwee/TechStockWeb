@@ -120,10 +120,24 @@
   <data name="Home" xml:space="preserve">
     <value>Accueil</value>
   </data>
-  <data name="Products" xml:space="preserve">
+  <data name="Privacy" xml:space="preserve">
+    <value>Confidentialité</value>
+  </data>
+<data name="TestKey" xml:space="preserve">
+    <value>Clé de test</value>
+</data>
+<data name="Products" xml:space="preserve">
     <value>Produits</value>
-  </data>
-  <data name="Suppliers" xml:space="preserve">
+</data>
+<data name="Suppliers" xml:space="preserve">
     <value>Fournisseurs</value>
-  </data>
+</data>
+<data name="My Assigned Products" xml:space="preserve">
+    <value>Mes produits assignés</value>
+</data>
+<data name="Users" xml:space="preserve">
+    <value>Utilisateurs</value>
+</data>
+
+
 </root>

@@ -1,19 +1,24 @@
 ﻿@model TechStockWeb.Models.Product
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@using Microsoft.Extensions.Localization
+@using System.Globalization
+@using TechStockWeb.Resources
 
 @{
-    ViewData["Title"] = "Assign Product to User";
+    ViewData["Title"] = Localizer["Assign Product to User"];
 }
 
-<h2>Assign Product to User</h2>
+<h2>@Localizer["Assign Product to User"]</h2>
 
-<p>Product: <strong>@Model.Name</strong></p>
-<p>Serial Number: <strong>@Model.SerialNumber</strong></p>
+<p>@Localizer["Product:"]<strong>@Model.Name</strong></p>
+<p>@Localizer["Serial Number:"] <strong>@Model.SerialNumber</strong></p>
 
 <form asp-controller="MaterialManagements" asp-action="AssignToUser" method="post">
     <input type="hidden" name="id" value="@Model.Id" />
 
-    <!-- Sélection de l'utilisateur -->
-    <label for="userId">Select User:</label>
+    
+    <label for="userId">@Localizer["Select User:"]</label>
     <select name="userId" class="form-control">
         @foreach (var user in ViewBag.Users)
         {
@@ -21,8 +26,8 @@
         }
     </select>
 
-    <!-- ✅ Ajout de la sélection de l'état -->
-    <label for="stateId" class="mt-2">Select Product State:</label>
+   
+    <label for="stateId" class="mt-2">@Localizer["Select Product State:"]</label>
     <select name="stateId" class="form-control">
         @foreach (var state in ViewBag.States)
         {
@@ -30,7 +35,7 @@
         }
     </select>
 
-    <button type="submit" class="btn btn-primary mt-2">Assign</button>
+    <button type="submit" class="btn btn-primary mt-2">@Localizer["Assign"]</button>
 </form>
 
-<a asp-action="Index" class="btn btn-secondary mt-3">Back to List</a>
+<a asp-action="Index" class="btn btn-secondary mt-3">@Localizer["Back to List"]</a>

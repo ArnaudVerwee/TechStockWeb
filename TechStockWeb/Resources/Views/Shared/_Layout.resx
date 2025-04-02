@@ -120,10 +120,7 @@
   <data name="Home" xml:space="preserve">
     <value>Home</value>
   </data>
-  <data name="Products" xml:space="preserve">
-    <value>Products</value>
-  </data>
-  <data name="Suppliers" xml:space="preserve">
-    <value>Suppliers</value>
+  <data name="Privacy" xml:space="preserve">
+    <value>Privacy</value>
   </data>
 </root>

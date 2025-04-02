@@ -1,23 +1,25 @@
 ﻿@model IEnumerable<TechStockWeb.Models.Supplier>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 @{
-    ViewData["Title"] = "Suppliers";
+    ViewData["Title"] = Localizer["Suppliers"];
 }
 
-<h1>Suppliers</h1>
+<h1>@Localizer["Suppliers"]</h1>
 
 <p>
     <a asp-action="Create" class="btn btn-success">
-        <i class="bi bi-plus-circle"></i> Create New
+        <i class="bi bi-plus-circle"></i> @Localizer["Create New"]
     </a>
 </p>
 
-<!-- Tableau des fournisseurs -->
+
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>@Html.DisplayNameFor(model => model.Name)</th>
-            <th>Actions</th>
+            <th>@Localizer["Name"]</th>
+            <th>@Localizer["Actions"]</th>
         </tr>
     </thead>
     <tbody>
@@ -27,13 +29,13 @@
                 <td>@Html.DisplayFor(modelItem => item.Name)</td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">
-                        <i class="bi bi-pencil"></i>
+                        <i class="bi bi-pencil"></i> @Localizer["Edit"]
                     </a>
                     <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">
-                        <i class="bi bi-eye"></i>
+                        <i class="bi bi-eye"></i> @Localizer["Details"]
                     </a>
                     <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">
-                        <i class="bi bi-trash"></i>
+                        <i class="bi bi-trash"></i> @Localizer["Delete"]
                     </a>
                 </td>
             </tr>

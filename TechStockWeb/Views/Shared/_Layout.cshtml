@@ -5,8 +5,10 @@
 @using System.Globalization
 @using TechStockWeb.Resources
 
-@inject IViewLocalizer _localizer
-@inject IStringLocalizer<SharedResource> Localizer
+@inject IStringLocalizer<SharedResource> _localizer
+
+@inject IStringLocalizer<SharedResource> StringLocalizer
+
 
 <html lang="en">
 <head>
@@ -29,6 +31,8 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+                        @if (User.IsInRole("Admin") || User.IsInRole("Support"))
+                        {
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["Home"]</a>
                         </li>
@@ -43,17 +47,23 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Suppliers" asp-action="Index">@Localizer["Suppliers"]</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="MaterialManagements" asp-action="MyAssignedProducts">
-                                <i class="bi bi-clipboard-check"></i> @Localizer["My Assigned Products"]
-                            </a>
-                        </li>
+                        }
+                        @if (User.Identity!.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="MaterialManagements" asp-action="MyAssignedProducts">
+                                    <i class="bi bi-clipboard-check"></i> @Localizer["My Assigned Products"]
+                                </a>
+                            </li>
+                        }
+
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-controller="Users" asp-action="Index">@Localizer["Users"]</a>
                             </li>
                         }
+
                     </ul>
 
                     <partial name="_LoginPartial" />
@@ -62,7 +72,17 @@
                 </div>
             </div>
         </nav>
+        <p>Test accès ressources : @StringLocalizer["Home"]</p>
+        <p>Culture active : @CultureInfo.CurrentUICulture.Name</p>
+        <p>Langue actuelle : @CultureInfo.CurrentCulture.Name</p>
+        <p>Test traduction Home : @Localizer["Home"]</p>
+        <p>Test traduction Privacy : @Localizer["Privacy"]</p>
+        <p>Test alternative Privacy : @_localizer["Privacy"]</p>
+
+        <div class="container">
     </header>
+    <p>Langue actuelle : @CultureInfo.CurrentCulture.Name</p>
+    <p>Test traduction : @_localizer["TestKey"]</p>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
