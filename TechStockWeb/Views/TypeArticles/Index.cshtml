@@ -1,23 +1,25 @@
-﻿@model IEnumerable<TechStockWeb.Models.TypeArticle>
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@model IEnumerable<TechStockWeb.Models.TypeArticle>
 
 @{
-    ViewData["Title"] = "Products Types";
+    ViewData["Title"] = Localizer["Products Types"];
 }
 
-<h1>Products Types</h1>
+<h1>@Localizer["Products Types"]</h1>
 
 <p>
     <a asp-action="Create" class="btn btn-success">
-        <i class="bi bi-plus-circle"></i> Create New
+        <i class="bi bi-plus-circle"></i> @Localizer["Create New"]
     </a>
 </p>
 
-<!-- Tableau des types de produits -->
 <table class="table table-striped">
     <thead>
         <tr>
             <th>@Html.DisplayNameFor(model => model.Name)</th>
-            <th>Actions</th>
+            <th>@Localizer["Actions"]</th>
         </tr>
     </thead>
     <tbody>

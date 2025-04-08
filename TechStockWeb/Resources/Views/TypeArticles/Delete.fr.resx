@@ -98,20 +98,16 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
-<data name="Name" xml:space="preserve">
-    <value>Nom</value>
-</data>
-<data name="Details" xml:space="preserve">
-    <value>Détails</value>
-</data>
-<data name="Supplier" xml:space="preserve">
-    <value>Fournisseur</value>
-</data>
-<data name="Edit" xml:space="preserve">
-    <value>Modifier</value>
-</data>
-<data name="Back to List" xml:space="preserve">
+  <data name="Delete" xml:space="preserve">
+    <value>Supprimer</value>
+  </data>
+  <data name="Are you sure you want to delete this?" xml:space="preserve">
+    <value>Êtes-vous sûr de vouloir supprimer ceci ?</value>
+  </data>
+  <data name="TypeArticle" xml:space="preserve">
+    <value>Type d'article</value>
+  </data>
+  <data name="Back to List" xml:space="preserve">
     <value>Retour à la liste</value>
-</data>
-
+  </data>
 </root>

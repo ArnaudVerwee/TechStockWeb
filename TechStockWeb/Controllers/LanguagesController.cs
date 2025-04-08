@@ -10,7 +10,7 @@ namespace TechStockWeb.Controllers
         {
             if (string.IsNullOrEmpty(id))
             {
-                id = "en"; // valeur par défaut si rien n'est envoyé
+                id = "en"; 
             }
 
             Response.Cookies.Append(

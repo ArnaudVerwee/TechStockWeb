@@ -110,5 +110,8 @@
 <data name="Back to List" xml:space="preserve">
     <value>Terug naar de lijst</value>
 </data>
+<data name="Name" xml:space="preserve">
+    <value>Naam</value>
+</data>
 
 </root>

@@ -41,6 +41,9 @@ builder.Services.AddControllersWithViews()
     .AddViewLocalization(Microsoft.AspNetCore.Mvc.Razor.LanguageViewLocationExpanderFormat.Suffix)
     .AddDataAnnotationsLocalization();
 
+// --- Ajout des services pour l'API ---
+builder.Services.AddControllers();  // Permet d'ajouter les contrôleurs API
+
 builder.Services.AddSingleton<IStringLocalizerFactory, ResourceManagerStringLocalizerFactory>();
 builder.Services.AddSingleton<IStringLocalizer>(provider =>
 {
@@ -49,16 +52,9 @@ builder.Services.AddSingleton<IStringLocalizer>(provider =>
 });
 
 // --- Configuration des options de localisation ---
-var supportedCultures = new[]
-{
-    new CultureInfo("en"),
-    new CultureInfo("fr"),
-    new CultureInfo("nl")
-};
-
+var supportedCultures = new[] { "en", "fr", "nl" };
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
-    var supportedCultures = new[] { "en", "fr", "nl" };
     options.DefaultRequestCulture = new RequestCulture("en");
     options.SupportedCultures = supportedCultures.Select(c => new CultureInfo(c)).ToArray();
     options.SupportedUICultures = supportedCultures.Select(c => new CultureInfo(c)).ToArray();
@@ -106,7 +102,15 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+
+// Ajout de ton middleware de logging
+app.UseMiddleware<TechStockWeb.Middleware.LoggingMiddleware>();
+
 app.UseAuthorization();
+
+// --- Mappe les contrôleurs API ---
+// Cette ligne permet de mapper les contrôleurs de ton API
+app.MapControllers();
 
 app.MapControllerRoute(
     name: "default",

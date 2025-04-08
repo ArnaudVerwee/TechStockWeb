@@ -80,7 +80,13 @@ public class RegisterModel : PageModel
 
         if (ModelState.IsValid)
         {
-            var user = new TechStockWebUser { UserName = Input.Email, Email = Input.Email };
+            var user = new TechStockWebUser
+            {
+                UserName = Input.Email,
+                Email = Input.Email,
+                EmailConfirmed = true 
+            };
+
 
             var result = await _userManager.CreateAsync(user, Input.Password);
 
@@ -88,14 +94,14 @@ public class RegisterModel : PageModel
             {
                 _logger.LogInformation("Nouvel utilisateur créé avec succès.");
 
-                // Assigner le rôle "User" si non existant
+               
                 if (!await _roleManager.RoleExistsAsync("User"))
                 {
                     await _roleManager.CreateAsync(new IdentityRole("User"));
                 }
                 await _userManager.AddToRoleAsync(user, "User");
 
-                // Générer le lien de confirmation
+                
                 var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 var confirmationLink = Url.Page(
                     "/Account/ConfirmEmail",
@@ -103,7 +109,7 @@ public class RegisterModel : PageModel
                     values: new { userId = user.Id, token = token },
                     protocol: Request.Scheme);
 
-                // Envoyer l'email
+                
                 await _emailSender.SendEmailAsync(user.Email, "Confirmez votre email",
                     $"Merci de vous être inscrit ! <a href='{HtmlEncoder.Default.Encode(confirmationLink)}'>Cliquez ici pour confirmer votre compte</a>");
 

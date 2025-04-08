@@ -49,10 +49,16 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="TypeArticles" asp-action="Index">
+                                    <i class=" bi bi-laptop"></i> @Localizer["TypeArticles"]
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Suppliers" asp-action="Index">
                                     <i class="bi bi-truck"></i> @Localizer["Suppliers"]
                                 </a>
                             </li>
+                          
                         }
                         @if (User.Identity!.IsAuthenticated)
                         {
