@@ -135,4 +135,7 @@
 <data name="Users" xml:space="preserve">
     <value>Gebruikers</value>
 </data>
+<data name="TypeArticles" xml:space="preserve">
+    <value>Producttype</value>
+</data>
 </root>

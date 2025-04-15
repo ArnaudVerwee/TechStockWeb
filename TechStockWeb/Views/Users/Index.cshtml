@@ -24,8 +24,9 @@
                 <td>@string.Join(", ", user.Roles)</td>
                 <td>
                     <a asp-action="ManageRoles" asp-route-userName="@user.UserName" class="btn btn-primary">
-                        @Localizer["Manage Roles"]
+                        <i class="bi bi-person-plus me-2"></i> @Localizer["Manage Roles"]
                     </a>
+
                 </td>
             </tr>
         }

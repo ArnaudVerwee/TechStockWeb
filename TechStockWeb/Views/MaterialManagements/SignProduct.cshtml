@@ -10,12 +10,12 @@
 
 <p><strong>@Localizer["Product"]:</strong> @Model.Product.Name</p>
 
-<!-- Zone de signature -->
+
 <canvas id="signatureCanvas" width="400" height="200" style="border:1px solid #000;"></canvas>
 <br>
 <button type="button" class="btn btn-warning" onclick="clearCanvas()">@Localizer["Clear"]</button>
 
-<!-- Formulaire d'envoi -->
+
 <form method="post" asp-action="SaveSignature">
     <input type="hidden" name="id" value="@Model.Id" />
     <input type="hidden" id="signatureData" name="signature" />

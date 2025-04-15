@@ -131,8 +131,9 @@
                     @if (assignment == null)
                     {
                         <a asp-controller="MaterialManagements" asp-action="AssignToUser" asp-route-id="@item.Id" class="btn btn-primary">
-                            @Localizer["AssignToUser"]
+                            <i class="bi bi-person"></i> @Localizer["AssignToUser"]
                         </a>
+
 
 
                     }

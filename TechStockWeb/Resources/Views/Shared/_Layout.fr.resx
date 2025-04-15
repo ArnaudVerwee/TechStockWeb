@@ -138,6 +138,9 @@
 <data name="Users" xml:space="preserve">
     <value>Utilisateurs</value>
 </data>
+<data name="TypeArticles" xml:space="preserve">
+    <value>Types d'articles</value>
+</data>
 
 
 </root>
