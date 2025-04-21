@@ -56,14 +56,14 @@ public class RegisterModel : PageModel
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "Le mot de passe doit comporter au moins {2} et au maximum {1} caractères.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "The password must be at least {2} and at most {1} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Mot de passe")]
+        [Display(Name = "Password")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirmez le mot de passe")]
-        [Compare("Password", ErrorMessage = "Les mots de passe ne correspondent pas.")]
+        [Display(Name = "Confirm Password")]
+        [Compare("Password", ErrorMessage = "The passwords do not match.")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -92,7 +92,7 @@ public class RegisterModel : PageModel
 
             if (result.Succeeded)
             {
-                _logger.LogInformation("Nouvel utilisateur créé avec succès.");
+                _logger.LogInformation("New user created successfully..");
 
                
                 if (!await _roleManager.RoleExistsAsync("User"))
@@ -110,8 +110,8 @@ public class RegisterModel : PageModel
                     protocol: Request.Scheme);
 
                 
-                await _emailSender.SendEmailAsync(user.Email, "Confirmez votre email",
-                    $"Merci de vous être inscrit ! <a href='{HtmlEncoder.Default.Encode(confirmationLink)}'>Cliquez ici pour confirmer votre compte</a>");
+                await _emailSender.SendEmailAsync(user.Email, "Confirm your email",
+                    $"Thank you for registering! <a href='{HtmlEncoder.Default.Encode(confirmationLink)}'>Click here to confirm your account</a>");
 
                 if (_userManager.Options.SignIn.RequireConfirmedAccount)
                 {
@@ -137,7 +137,7 @@ public class RegisterModel : PageModel
     {
         if (!_userManager.SupportsUserEmail)
         {
-            throw new NotSupportedException("L'authentification par email est requise.");
+            throw new NotSupportedException("Authentication with email is required.");
         }
         return (IUserEmailStore<TechStockWebUser>)_userStore;
     }

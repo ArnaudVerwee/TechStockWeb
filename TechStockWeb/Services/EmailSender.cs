@@ -33,7 +33,7 @@ public class EmailSender : IEmailSender
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Erreur d'envoi d'email : {ex.Message}");
+            Console.WriteLine($"Error sending mails : {ex.Message}");
             throw;
         }
     }

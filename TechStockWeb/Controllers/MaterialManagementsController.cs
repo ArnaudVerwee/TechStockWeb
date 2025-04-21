@@ -25,7 +25,7 @@ namespace TechStockWeb.Controllers
             _userManager = userManager;
         }
 
-        // ✅ Liste complète des assignations (Admin)
+        
         public async Task<IActionResult> Index()
         {
             var techStockContext = _context.MaterialManagement
@@ -35,7 +35,6 @@ namespace TechStockWeb.Controllers
             return View(await techStockContext.ToListAsync());
         }
 
-        // ✅ Affiche les produits assignés à l'utilisateur connecté
         public async Task<IActionResult> MyAssignedProducts()
         {
             var userId = _userManager.GetUserId(User);
@@ -48,7 +47,7 @@ namespace TechStockWeb.Controllers
             return View(assignedProducts);
         }
 
-        // ✅ GET: Page de signature pour un produit
+       
         public async Task<IActionResult> SignProduct(int id)
         {
             var assignment = await _context.MaterialManagement
@@ -63,7 +62,7 @@ namespace TechStockWeb.Controllers
             return View(assignment);
         }
 
-        // ✅ POST: Enregistrement de la signature
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SignProduct(int id, string signature)
@@ -83,7 +82,7 @@ namespace TechStockWeb.Controllers
             return RedirectToAction(nameof(MyAssignedProducts));
         }
 
-        // ✅ POST: Sauvegarder la signature via formulaire
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SaveSignature(int id, string signature)
@@ -108,7 +107,7 @@ namespace TechStockWeb.Controllers
             return RedirectToAction(nameof(MyAssignedProducts));
         }
 
-        // ✅ GET: Assigner un produit à un utilisateur
+        
         public async Task<IActionResult> AssignToUser(int id)
         {
             var product = await _context.Products.FindAsync(id);
@@ -122,7 +121,7 @@ namespace TechStockWeb.Controllers
             return View(product);
         }
 
-        // ✅ POST: Assigner un produit
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AssignToUser(int id, string userId, int stateId)
@@ -159,7 +158,7 @@ namespace TechStockWeb.Controllers
             return RedirectToAction("Index", "Products");
         }
 
-        // ✅ GET: Affiche les détails d'une assignation
+       
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -180,7 +179,7 @@ namespace TechStockWeb.Controllers
             return View(materialManagement);
         }
 
-        // ✅ GET: Modifier une assignation
+        
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -196,7 +195,7 @@ namespace TechStockWeb.Controllers
             return View(materialManagement);
         }
 
-        // ✅ POST: Modifier une assignation
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,ProductId,StateId,Signature,AssignmentDate,SignatureDate")] MaterialManagement materialManagement)
@@ -229,7 +228,7 @@ namespace TechStockWeb.Controllers
             return View(materialManagement);
         }
 
-        // ✅ GET: Supprimer une assignation
+        
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -250,7 +249,7 @@ namespace TechStockWeb.Controllers
             return View(materialManagement);
         }
 
-        // ✅ POST: Confirmer la suppression
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -265,7 +264,7 @@ namespace TechStockWeb.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // ✅ Vérifier si un produit est assigné
+        
         private bool MaterialManagementExists(int id)
         {
             return _context.MaterialManagement.Any(e => e.Id == id);

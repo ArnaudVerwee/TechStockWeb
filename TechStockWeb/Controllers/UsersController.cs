@@ -10,7 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TechStockWeb.Areas.Identity.Data;
 
-[Authorize(Roles = "Admin")] // Seuls les admins peuvent gérer les utilisateurs
+[Authorize(Roles = "Admin")] 
 public class UsersController : Controller
 {
     private readonly UserManager<TechStockWebUser> _userManager;
@@ -22,7 +22,7 @@ public class UsersController : Controller
         _roleManager = roleManager;
     }
 
-    // Affiche la liste des utilisateurs et leurs rôles
+    
     public async Task<IActionResult> Index()
     {
         var users = await _userManager.Users.ToListAsync();
@@ -37,7 +37,7 @@ public class UsersController : Controller
         return View(userRoles);
     }
 
-    // Modifier les rôles d'un utilisateur
+    
     [HttpGet]
     public async Task<IActionResult> ManageRoles(string userName)
     {

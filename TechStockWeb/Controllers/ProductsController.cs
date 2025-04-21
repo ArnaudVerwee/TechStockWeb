@@ -20,16 +20,16 @@ namespace TechStockWeb.Controllers
             _context = context;
         }
 
-        // GET: Products
+        
         public async Task<IActionResult> Index(string SearchName, string SearchSerialNumber, string SearchType, string SearchSupplier, string SearchUser)
         {
-            // Charger les produits de base
+            
             var products = _context.Products
                 .Include(p => p.Supplier)
                 .Include(p => p.TypeArticle)
                 .AsQueryable();
 
-            // Appliquer les filtres
+            
             if (!string.IsNullOrEmpty(SearchName))
             {
                 products = products.Where(p => p.Name.Contains(SearchName));
@@ -43,13 +43,13 @@ namespace TechStockWeb.Controllers
             if (!string.IsNullOrEmpty(SearchType))
             {
                 int typeId;
-                if (int.TryParse(SearchType, out typeId)) // Vérifier si SearchType peut être converti en entier
+                if (int.TryParse(SearchType, out typeId)) 
                 {
                     products = products.Where(p => p.TypeId == typeId);
                 }
                 else
                 {
-                    // Recherche par nom du type d'article si la conversion échoue
+                    
                     products = products.Where(p => p.TypeArticle.Name.Contains(SearchType));
                 }
             }
@@ -57,13 +57,13 @@ namespace TechStockWeb.Controllers
             if (!string.IsNullOrEmpty(SearchSupplier))
             {
                 int supplierId;
-                if (int.TryParse(SearchSupplier, out supplierId)) // Vérifier si SearchSupplier peut être converti en entier
+                if (int.TryParse(SearchSupplier, out supplierId)) 
                 {
                     products = products.Where(p => p.SupplierId == supplierId);
                 }
                 else
                 {
-                    // Recherche par nom du fournisseur si la conversion échoue
+                    
                     products = products.Where(p => p.Supplier.Name.Contains(SearchSupplier));
                 }
             }
@@ -72,7 +72,7 @@ namespace TechStockWeb.Controllers
             {
                 if (SearchUser == "NotAssigned")
                 {
-                    // Sélectionner les produits qui n'ont PAS d'assignation
+                    
                     products = from p in products
                                join m in _context.MaterialManagement on p.Id equals m.ProductId into assignments
                                from assignment in assignments.DefaultIfEmpty()
@@ -91,24 +91,24 @@ namespace TechStockWeb.Controllers
             }
 
 
-            // Charger les informations sur l'assignation des utilisateurs
+            
             var materialAssignments = await _context.MaterialManagement
                 .Include(m => m.User)
                 .ToListAsync();
 
-            // Charger la liste des utilisateurs pour le menu déroulant
+            
             ViewBag.Users = new SelectList(await _context.Users.ToListAsync(), "Id", "UserName");
 
             ViewBag.MaterialAssignments = materialAssignments;
 
-            // Stocker les valeurs de recherche dans ViewData pour les réafficher
+            
             ViewData["SearchName"] = SearchName;
             ViewData["SearchSerialNumber"] = SearchSerialNumber;
             ViewData["SearchType"] = SearchType;
             ViewData["SearchSupplier"] = SearchSupplier;
-            ViewData["SearchUser"] = SearchUser; // Stockage du filtre utilisateur
+            ViewData["SearchUser"] = SearchUser; 
 
-            // Charger les listes déroulantes pour les filtres
+           
             ViewBag.TypeList = new SelectList(_context.TypeArticle, "Id", "Name");
             ViewBag.SupplierList = new SelectList(_context.Supplier, "Id", "Name");
 
@@ -119,7 +119,7 @@ namespace TechStockWeb.Controllers
 
 
 
-        // GET: Products/Details/5
+        
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -139,7 +139,7 @@ namespace TechStockWeb.Controllers
             return View(product);
         }
 
-        // GET: Products/Create
+        
         public IActionResult Create()
         {
             ViewData["SupplierId"] = new SelectList(_context.Supplier, "Id", "Name");
@@ -147,9 +147,7 @@ namespace TechStockWeb.Controllers
             return View();
         }
 
-        // POST: Products/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,SerialNumber,TypeId,SupplierId")] Product product)
@@ -181,7 +179,7 @@ namespace TechStockWeb.Controllers
             return View(product);
         }
 
-        // GET: Products/Edit/5
+        
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -199,9 +197,7 @@ namespace TechStockWeb.Controllers
             return View(product);
         }
 
-        // POST: Products/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,SerialNumber,TypeId,SupplierId")] Product product)
@@ -211,7 +207,7 @@ namespace TechStockWeb.Controllers
                 return NotFound();
             }
 
-            // Récupération des objets TypeArticle et Supplier
+            
             var typeArticle = await _context.TypeArticle.FindAsync(product.TypeId);
             var supplier = await _context.Supplier.FindAsync(product.SupplierId);
 
@@ -219,7 +215,7 @@ namespace TechStockWeb.Controllers
             product.TypeArticle = typeArticle;
             product.Supplier = supplier;
 
-            // Supprimer les erreurs de validation liées aux propriétés non bindées
+            
             ModelState.Remove("TypeArticle");
             ModelState.Remove("Supplier");
 
@@ -250,7 +246,7 @@ namespace TechStockWeb.Controllers
         }
 
 
-        // GET: Products/Delete/5
+        
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -270,7 +266,7 @@ namespace TechStockWeb.Controllers
             return View(product);
         }
 
-        // POST: Products/Delete/5
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -290,7 +286,7 @@ namespace TechStockWeb.Controllers
             return _context.Products.Any(e => e.Id == id);
         }
 
-        // Assigner un produit à un utilisateur
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AssignToUser(int id, int userId)
@@ -304,7 +300,7 @@ namespace TechStockWeb.Controllers
                 return NotFound();
             }
 
-            // Vérifier si le produit est déjà assigné
+            
             var existingAssignment = await _context.MaterialManagement
                 .FirstOrDefaultAsync(m => m.ProductId == id);
 
@@ -314,7 +310,7 @@ namespace TechStockWeb.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            // Création de l'assignation
+            
             var assignment = new MaterialManagement
             {
                 ProductId = id,
@@ -328,7 +324,7 @@ namespace TechStockWeb.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // Désassigner un produit d'un utilisateur
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UnassignFromUser(int id)

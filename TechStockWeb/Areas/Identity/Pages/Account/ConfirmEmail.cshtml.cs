@@ -17,16 +17,16 @@ public class ConfirmEmailModel : PageModel
     {
         if (userId == null || token == null)
         {
-            return BadRequest("Paramètres invalides");
+            return BadRequest("Wrong settings");
         }
 
         var user = await _userManager.FindByIdAsync(userId);
         if (user == null)
         {
-            return NotFound($"Utilisateur avec l'ID '{userId}' non trouvé.");
+            return NotFound($"User with ID '{userId}' not found.");
         }
 
         var result = await _userManager.ConfirmEmailAsync(user, token);
-        return result.Succeeded ? Page() : BadRequest("Échec de la confirmation.");
+        return result.Succeeded ? Page() : BadRequest("Error.");
     }
 }

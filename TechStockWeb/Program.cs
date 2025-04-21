@@ -15,19 +15,18 @@ using TechStockWeb.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// --- Configuration des services de localisation ---
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 
 var assembly = Assembly.GetExecutingAssembly();
-Debug.WriteLine($"🔍 Assembly en cours : {assembly.FullName}");
+Debug.WriteLine($" Assembly ongoing : {assembly.FullName}");
 
 var resourceNames = assembly.GetManifestResourceNames();
 foreach (var name in resourceNames)
 {
-    Debug.WriteLine($"📂 Ressource trouvée : {name}");
+    Debug.WriteLine($" Ressource found : {name}");
 }
 
-// --- Configuration de la base de données et de l'identité ---
+
 builder.Services.AddDbContext<TechStockContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("TechStock")
     ?? throw new InvalidOperationException("Connection string 'TechStock' not found.")));
@@ -36,13 +35,11 @@ builder.Services.AddDefaultIdentity<TechStockWebUser>(options => options.SignIn.
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<TechStockContext>();
 
-// --- Ajout du support de la localisation dans les vues et contrôleurs ---
 builder.Services.AddControllersWithViews()
     .AddViewLocalization(Microsoft.AspNetCore.Mvc.Razor.LanguageViewLocationExpanderFormat.Suffix)
     .AddDataAnnotationsLocalization();
 
-// --- Ajout des services pour l'API ---
-builder.Services.AddControllers();  // Permet d'ajouter les contrôleurs API
+builder.Services.AddControllers();  
 
 builder.Services.AddSingleton<IStringLocalizerFactory, ResourceManagerStringLocalizerFactory>();
 builder.Services.AddSingleton<IStringLocalizer>(provider =>
@@ -51,7 +48,7 @@ builder.Services.AddSingleton<IStringLocalizer>(provider =>
     return factory.Create(typeof(SharedResource));
 });
 
-// --- Configuration des options de localisation ---
+
 var supportedCultures = new[] { "en", "fr", "nl" };
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
@@ -60,7 +57,7 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
     options.SupportedUICultures = supportedCultures.Select(c => new CultureInfo(c)).ToArray();
 });
 
-// --- Configuration de l'email ---
+
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 
@@ -69,11 +66,11 @@ builder.Logging.SetMinimumLevel(LogLevel.Debug);
 
 var app = builder.Build();
 
-// --- Middleware de gestion des cultures ---
+
 var localizationOptions = app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value;
 app.UseRequestLocalization(localizationOptions);
 
-// --- Initialisation de la base de données et des rôles ---
+
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -88,11 +85,10 @@ using (var scope = app.Services.CreateScope())
     }
     catch (Exception ex)
     {
-        Debug.WriteLine($"❌ Erreur lors du seed de la base de données : {ex.Message}");
+        Debug.WriteLine($" Error while seeding the database:{ex.Message}");
     }
 }
 
-// --- Pipeline HTTP ---
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -103,13 +99,12 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
-// Ajout de ton middleware de logging
+
 app.UseMiddleware<TechStockWeb.Middleware.LoggingMiddleware>();
 
 app.UseAuthorization();
 
-// --- Mappe les contrôleurs API ---
-// Cette ligne permet de mapper les contrôleurs de ton API
+
 app.MapControllers();
 
 app.MapControllerRoute(
@@ -119,7 +114,7 @@ app.MapRazorPages();
 
 app.Run();
 
-// --- Fonctions auxiliaires ---
+
 static async Task SeedRolesAndUsers(RoleManager<IdentityRole> roleManager, UserManager<TechStockWebUser> userManager)
 {
     string[] roles = { "Admin", "Support", "User" };
@@ -156,6 +151,6 @@ static async Task SeedStates(TechStockContext dbContext)
         });
 
         await dbContext.SaveChangesAsync();
-        Debug.WriteLine("✅ États par défaut ajoutés avec succès.");
+        Debug.WriteLine(" Default states were added successfully.");
     }
 }

@@ -14,7 +14,7 @@ namespace TechStockWeb.Controllers
         private readonly IStringLocalizer<HomeController> _localizer;
         private readonly TechStockContext _context;
 
-        // Constructeur
+       
         public HomeController(ILogger<HomeController> logger, IStringLocalizer<HomeController> localizer, TechStockContext context)
         {
             _logger = logger;
@@ -22,19 +22,19 @@ namespace TechStockWeb.Controllers
             _context = context;
         }
 
-        // Page d'accueil
+        
         public IActionResult Index()
         {
             return View();
         }
 
-        // Page de confidentialité
+        
         public IActionResult Privacy()
         {
             return View();
         }
 
-        // Gestion de l'erreur
+        
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
@@ -55,7 +55,7 @@ namespace TechStockWeb.Controllers
                 return BadRequest("Culture not supported");
             }
 
-            // Ajout d'un log pour voir la culture qui a été passée
+            
             _logger.LogInformation($"Changing language to {culture}");
 
             Response.Cookies.Append(
@@ -74,7 +74,7 @@ namespace TechStockWeb.Controllers
 
 
 
-        // 📊 Obtenir les statistiques des produits (Total / Assignés / Non Assignés)
+        
         public async Task<IActionResult> GetProductStats()
         {
             var totalProducts = await _context.Products.CountAsync();
@@ -91,7 +91,7 @@ namespace TechStockWeb.Controllers
             });
         }
 
-        // 📊 Obtenir la performance des utilisateurs (Produits reçus)
+      
         public async Task<IActionResult> UserPerformanceStats()
         {
             try
