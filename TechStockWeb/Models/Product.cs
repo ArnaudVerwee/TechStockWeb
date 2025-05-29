@@ -8,10 +8,10 @@ namespace TechStockWeb.Models
         [Key]
         public int Id { get; set; }
 
-        [Display(Name ="Name")]
+        [Display(Name = "Name")]
         public required string Name { get; set; }
 
-        [Display(Name="SerialNumber")]
+        [Display(Name = "SerialNumber")]
         public required string SerialNumber { get; set; }
 
         [Display(Name = "Item Types")]
@@ -23,6 +23,12 @@ namespace TechStockWeb.Models
         [ForeignKey("Supplier")]
         public required int SupplierId { get; set; }
         public Supplier Supplier { get; set; }
+
+        [Display(Name = "Assigned User")]
+        public int? AssignedUserId { get; set; } 
+
+        [ForeignKey("AssignedUserId")]
+        public User? AssignedUser { get; set; }
     }
 }
 

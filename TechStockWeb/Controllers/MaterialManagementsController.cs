@@ -116,7 +116,7 @@ namespace TechStockWeb.Controllers
                 return NotFound();
             }
 
-            ViewBag.Users = await _context.Users.ToListAsync();
+            ViewBag.Users = await _userManager.Users.ToListAsync();
             ViewBag.States = await _context.States.ToListAsync();
             return View(product);
         }
@@ -127,7 +127,7 @@ namespace TechStockWeb.Controllers
         public async Task<IActionResult> AssignToUser(int id, string userId, int stateId)
         {
             var product = await _context.Products.FindAsync(id);
-            var user = await _context.Users.FindAsync(userId);
+            var user = await _userManager.FindByIdAsync(userId);
             var state = await _context.States.FindAsync(stateId);
 
             if (product == null || user == null || state == null)

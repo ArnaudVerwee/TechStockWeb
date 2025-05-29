@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TechStockWeb.Data;
 
@@ -11,9 +12,11 @@ using TechStockWeb.Data;
 namespace TechStockWeb.Migrations
 {
     [DbContext(typeof(TechStockContext))]
-    partial class TechStockContextModelSnapshot : ModelSnapshot
+    [Migration("20250529101002_NomDeLaMigration")]
+    partial class NomDeLaMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -271,9 +274,6 @@ namespace TechStockWeb.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AssignedUserId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -288,13 +288,16 @@ namespace TechStockWeb.Migrations
                     b.Property<int>("TypeId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("AssignedUserId");
+                    b.HasKey("Id");
 
                     b.HasIndex("SupplierId");
 
                     b.HasIndex("TypeId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Products");
                 });
@@ -454,10 +457,6 @@ namespace TechStockWeb.Migrations
 
             modelBuilder.Entity("TechStockWeb.Models.Product", b =>
                 {
-                    b.HasOne("TechStockWeb.Models.User", "AssignedUser")
-                        .WithMany("AssignedProducts")
-                        .HasForeignKey("AssignedUserId");
-
                     b.HasOne("TechStockWeb.Models.Supplier", "Supplier")
                         .WithMany()
                         .HasForeignKey("SupplierId")
@@ -470,7 +469,9 @@ namespace TechStockWeb.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("AssignedUser");
+                    b.HasOne("TechStockWeb.Models.User", null)
+                        .WithMany("AssignedProducts")
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Supplier");
 

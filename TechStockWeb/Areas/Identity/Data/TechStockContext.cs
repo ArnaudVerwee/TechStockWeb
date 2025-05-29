@@ -23,6 +23,7 @@ public class TechStockContext : IdentityDbContext<TechStockWebUser>
 
 public DbSet<TechStockWeb.Models.TypeArticle> TypeArticle { get; set; } = default!;
 
+public DbSet<TechStockWeb.Models.User> Users { get; set; } = default!;
 public DbSet<TechStockWeb.Models.Supplier> Supplier { get; set; } = default!;
 
 public DbSet<TechStockWeb.Models.States> States { get; set; } = default!;

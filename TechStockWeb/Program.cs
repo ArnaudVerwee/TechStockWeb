@@ -64,6 +64,26 @@ builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Logging.AddConsole();
 builder.Logging.SetMinimumLevel(LogLevel.Debug);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowMauiApp", policy =>
+    {
+        policy
+            .WithOrigins(
+                "http://localhost",                
+                "https://localhost",               
+                "http://10.0.2.2:5000",            
+                "https://10.0.2.2:7237",           
+                "http://localhost:5000",           
+                "https://localhost:7237"           
+            )
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
+
+
 var app = builder.Build();
 
 
@@ -101,6 +121,8 @@ app.UseRouting();
 
 
 app.UseMiddleware<TechStockWeb.Middleware.LoggingMiddleware>();
+
+app.UseCors("AllowMauiApp");
 
 app.UseAuthorization();
 
