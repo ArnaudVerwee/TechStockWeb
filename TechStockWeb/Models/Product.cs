@@ -9,26 +9,33 @@ namespace TechStockWeb.Models
         public int Id { get; set; }
 
         [Display(Name = "Name")]
-        public required string Name { get; set; }
+        [Required]
+        public string Name { get; set; } = string.Empty;
 
         [Display(Name = "SerialNumber")]
-        public required string SerialNumber { get; set; }
+        [Required]
+        public string SerialNumber { get; set; } = string.Empty;
 
         [Display(Name = "Item Types")]
         [ForeignKey("TypeArticle")]
-        public required int TypeId { get; set; }
-        public TypeArticle TypeArticle { get; set; }
+        [Required]
+        public int TypeId { get; set; }
+
+        // IMPORTANT: Enlever [Required] sur les propriétés de navigation
+        public TypeArticle? TypeArticle { get; set; }
 
         [Display(Name = "Supplier")]
         [ForeignKey("Supplier")]
-        public required int SupplierId { get; set; }
-        public Supplier Supplier { get; set; }
+        [Required]
+        public int SupplierId { get; set; }
+
+        // IMPORTANT: Enlever [Required] sur les propriétés de navigation
+        public Supplier? Supplier { get; set; }
 
         [Display(Name = "Assigned User")]
-        public int? AssignedUserId { get; set; } 
+        public int? AssignedUserId { get; set; }
 
         [ForeignKey("AssignedUserId")]
         public User? AssignedUser { get; set; }
     }
 }
-

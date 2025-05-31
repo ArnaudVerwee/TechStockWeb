@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.DependencyInjection;
+using System.Text;
 using System.Globalization;
 using TechStockWeb.Data;
 using Microsoft.AspNetCore.Identity;
@@ -26,20 +29,40 @@ foreach (var name in resourceNames)
     Debug.WriteLine($" Ressource found : {name}");
 }
 
-
 builder.Services.AddDbContext<TechStockContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("TechStock")
     ?? throw new InvalidOperationException("Connection string 'TechStock' not found.")));
 
+// 1. Configuration Identity (pour l'authentification web)
 builder.Services.AddDefaultIdentity<TechStockWebUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<TechStockContext>();
+
+// 2. Configuration JWT (pour l'API) - SANS écraser les defaults
+var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+var secretKey = jwtSettings["SecretKey"] ?? "YourVeryLongSecretKeyHere123456789";
+
+builder.Services.AddAuthentication()  // Pas de configuration par défaut
+    .AddJwtBearer("Bearer", options =>  // Schéma nommé explicitement
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwtSettings["Issuer"] ?? "TechStockAPI",
+            ValidAudience = jwtSettings["Audience"] ?? "TechStockMaui",
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
+            ClockSkew = TimeSpan.Zero
+        };
+    });
 
 builder.Services.AddControllersWithViews()
     .AddViewLocalization(Microsoft.AspNetCore.Mvc.Razor.LanguageViewLocationExpanderFormat.Suffix)
     .AddDataAnnotationsLocalization();
 
-builder.Services.AddControllers();  
+builder.Services.AddControllers();
 
 builder.Services.AddSingleton<IStringLocalizerFactory, ResourceManagerStringLocalizerFactory>();
 builder.Services.AddSingleton<IStringLocalizer>(provider =>
@@ -48,7 +71,6 @@ builder.Services.AddSingleton<IStringLocalizer>(provider =>
     return factory.Create(typeof(SharedResource));
 });
 
-
 var supportedCultures = new[] { "en", "fr", "nl" };
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
@@ -56,7 +78,6 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
     options.SupportedCultures = supportedCultures.Select(c => new CultureInfo(c)).ToArray();
     options.SupportedUICultures = supportedCultures.Select(c => new CultureInfo(c)).ToArray();
 });
-
 
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 builder.Services.AddTransient<IEmailSender, EmailSender>();
@@ -70,26 +91,22 @@ builder.Services.AddCors(options =>
     {
         policy
             .WithOrigins(
-                "http://localhost",                
-                "https://localhost",               
-                "http://10.0.2.2:5000",            
-                "https://10.0.2.2:7237",           
-                "http://localhost:5000",           
-                "https://localhost:7237"           
+                "http://localhost",
+                "https://localhost",
+                "http://10.0.2.2:5000",
+                "https://10.0.2.2:7237",
+                "http://localhost:5000",
+                "https://localhost:7237"
             )
             .AllowAnyHeader()
             .AllowAnyMethod();
     });
 });
 
-
-
 var app = builder.Build();
-
 
 var localizationOptions = app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value;
 app.UseRequestLocalization(localizationOptions);
-
 
 using (var scope = app.Services.CreateScope())
 {
@@ -119,13 +136,13 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
-
 app.UseMiddleware<TechStockWeb.Middleware.LoggingMiddleware>();
 
 app.UseCors("AllowMauiApp");
 
+// IMPORTANT : L'ordre est crucial
+app.UseAuthentication();  // Doit être avant UseAuthorization
 app.UseAuthorization();
-
 
 app.MapControllers();
 
@@ -135,7 +152,6 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
-
 
 static async Task SeedRolesAndUsers(RoleManager<IdentityRole> roleManager, UserManager<TechStockWebUser> userManager)
 {

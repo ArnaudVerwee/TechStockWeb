@@ -87,30 +87,106 @@ namespace TechStockWeb.Controllers
         [HttpPost("Assign")]
         public async Task<IActionResult> AssignProduct([FromBody] AssignmentDto dto)
         {
-            var product = await _context.Products.FindAsync(dto.ProductId);
-            var user = await _context.Users.FindAsync(dto.UserId);
-            var state = await _context.States.FindAsync(dto.StateId);
-
-            if (product == null || user == null || state == null)
-                return BadRequest("Invalid data.");
-
-            var existing = await _context.MaterialManagement
-                .FirstOrDefaultAsync(m => m.ProductId == dto.ProductId);
-
-            if (existing != null) _context.MaterialManagement.Remove(existing);
-
-            var newAssignment = new MaterialManagement
+            try
             {
-                ProductId = dto.ProductId,
-                UserId = dto.UserId,
-                StateId = dto.StateId,
-                AssignmentDate = DateTime.Now
-            };
+                System.Diagnostics.Debug.WriteLine($"🔄 API AssignProduct - ProductId: {dto.ProductId}, UserId: {dto.UserId}, StateId: {dto.StateId}");
 
-            _context.MaterialManagement.Add(newAssignment);
-            await _context.SaveChangesAsync();
+                // Vérifier le produit
+                System.Diagnostics.Debug.WriteLine("🔍 Recherche produit...");
+                var product = await _context.Products.FindAsync(dto.ProductId);
+                if (product == null)
+                {
+                    System.Diagnostics.Debug.WriteLine($"❌ Produit non trouvé: {dto.ProductId}");
+                    return BadRequest("Product not found.");
+                }
+                System.Diagnostics.Debug.WriteLine($"✅ Produit trouvé: {product.Name}");
 
-            return Ok(new { message = "Product assigned." });
+                // Vérifier l'utilisateur Identity
+                System.Diagnostics.Debug.WriteLine("🔍 Recherche utilisateur Identity...");
+                var identityUser = await _userManager.FindByEmailAsync(dto.UserId);
+                if (identityUser == null)
+                {
+                    System.Diagnostics.Debug.WriteLine("🔍 Pas trouvé par email, essai par username...");
+                    identityUser = await _userManager.FindByNameAsync(dto.UserId);
+                }
+
+                if (identityUser == null)
+                {
+                    System.Diagnostics.Debug.WriteLine($"❌ Utilisateur Identity non trouvé: {dto.UserId}");
+                    return BadRequest("User not found.");
+                }
+                System.Diagnostics.Debug.WriteLine($"✅ Utilisateur trouvé: {identityUser.Email}, ID: {identityUser.Id}");
+
+                // Vérifier l'état
+                System.Diagnostics.Debug.WriteLine("🔍 Recherche état...");
+                var state = await _context.States.FindAsync(dto.StateId);
+                if (state == null)
+                {
+                    System.Diagnostics.Debug.WriteLine($"❌ État non trouvé: {dto.StateId}");
+                    return BadRequest("State not found.");
+                }
+                System.Diagnostics.Debug.WriteLine($"✅ État trouvé: {state.Status}");
+
+                // Supprimer l'assignation existante
+                System.Diagnostics.Debug.WriteLine("🔍 Recherche assignation existante...");
+                var existing = await _context.MaterialManagement
+                    .FirstOrDefaultAsync(m => m.ProductId == dto.ProductId);
+
+                if (existing != null)
+                {
+                    System.Diagnostics.Debug.WriteLine($"🔄 Suppression assignation existante ID: {existing.Id}");
+                    _context.MaterialManagement.Remove(existing);
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("✅ Aucune assignation existante");
+                }
+
+                // Créer la nouvelle assignation
+                System.Diagnostics.Debug.WriteLine("🔄 Création nouvelle assignation...");
+                var newAssignment = new MaterialManagement
+                {
+                    ProductId = dto.ProductId,
+                    UserId = identityUser.Id,
+                    StateId = dto.StateId,
+                    AssignmentDate = DateTime.Now,
+                    Signature = "", // Initialiser avec valeur par défaut
+                    SignatureDate = DateTime.MinValue // Initialiser avec valeur par défaut
+                };
+
+                System.Diagnostics.Debug.WriteLine($"🔄 Assignation créée - ProductId: {newAssignment.ProductId}, UserId: {newAssignment.UserId}, StateId: {newAssignment.StateId}");
+
+                _context.MaterialManagement.Add(newAssignment);
+                System.Diagnostics.Debug.WriteLine("✅ Assignation ajoutée au context");
+
+                // Sauvegarder
+                System.Diagnostics.Debug.WriteLine("🔄 Sauvegarde en cours...");
+                await _context.SaveChangesAsync();
+                System.Diagnostics.Debug.WriteLine("✅ Sauvegarde réussie");
+
+                System.Diagnostics.Debug.WriteLine($"✅ Assignation créée avec succès - ID: {newAssignment.Id}");
+                return Ok(new { message = "Product assigned successfully.", assignmentId = newAssignment.Id });
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"❌ ERREUR DÉTAILLÉE AssignProduct:");
+                System.Diagnostics.Debug.WriteLine($"   Message: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"   Type: {ex.GetType().Name}");
+                System.Diagnostics.Debug.WriteLine($"   Stack: {ex.StackTrace}");
+
+                if (ex.InnerException != null)
+                {
+                    System.Diagnostics.Debug.WriteLine($"   Inner Exception: {ex.InnerException.Message}");
+                    System.Diagnostics.Debug.WriteLine($"   Inner Stack: {ex.InnerException.StackTrace}");
+                }
+
+                return StatusCode(500, new
+                {
+                    message = "Internal server error",
+                    error = ex.Message,
+                    innerError = ex.InnerException?.Message
+                });
+            }
         }
 
         // DELETE: api/MaterialManagements/5
@@ -124,6 +200,36 @@ namespace TechStockWeb.Controllers
             await _context.SaveChangesAsync();
 
             return Ok(new { message = "Assignment deleted." });
+        }
+
+        // DELETE: api/MaterialManagements/product/5
+        [HttpDelete("product/{productId}")]
+        public async Task<IActionResult> UnassignProduct(int productId)
+        {
+            try
+            {
+                System.Diagnostics.Debug.WriteLine($"🔄 API UnassignProduct - ProductId: {productId}");
+
+                var assignment = await _context.MaterialManagement
+                    .FirstOrDefaultAsync(m => m.ProductId == productId);
+
+                if (assignment == null)
+                {
+                    System.Diagnostics.Debug.WriteLine($"⚠️ Aucune assignation trouvée pour le produit {productId}");
+                    return Ok(new { message = "No assignment found for this product." });
+                }
+
+                _context.MaterialManagement.Remove(assignment);
+                await _context.SaveChangesAsync();
+
+                System.Diagnostics.Debug.WriteLine($"✅ Produit {productId} désassigné avec succès");
+                return Ok(new { message = "Product unassigned successfully." });
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"❌ Erreur UnassignProduct: {ex.Message}");
+                return StatusCode(500, new { message = "Internal server error", error = ex.Message });
+            }
         }
     }
 

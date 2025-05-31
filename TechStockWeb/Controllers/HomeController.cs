@@ -5,9 +5,11 @@ using Microsoft.Extensions.Localization;
 using Microsoft.EntityFrameworkCore;
 using TechStockWeb.Models;
 using TechStockWeb.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TechStockWeb.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
