@@ -110,4 +110,19 @@
   <data name="Back to List" xml:space="preserve">
     <value>Terug naar lijst</value>
   </data>
+<data name="New Type Article" xml:space="preserve">
+    <value>nieuw artikeltype</value>
+</data>
+<data name="Type Article Information" xml:space="preserve">
+    <value>Artikeltype Informatie</value>
+</data>
+<data name="Enter type name" xml:space="preserve">
+    <value>Voer de naam van het artikeltype in</value>
+</data>
+<data name="Save" xml:space="preserve">
+    <value>Opslaan</value>
+</data>
+<data name="Cancel" xml:space="preserve">
+    <value>Annuleren</value>
+</data>
 </root>

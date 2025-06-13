@@ -107,4 +107,24 @@
 <data name="Logout" xml:space="preserve">
     <value>Se déconnecter</value>
   </data>
+<data name="Login" xml:space="preserve"><value>Connexion</value></data>
+<data name="ConnectToAccount" xml:space="preserve"><value>Connectez-vous à votre compte</value></data>
+<data name="Email" xml:space="preserve"><value>Email</value></data>
+<data name="Password" xml:space="preserve"><value>Mot de passe</value></data>
+<data name="EmailPlaceholder" xml:space="preserve"><value>votre.email@exemple.com</value></data>
+<data name="PasswordPlaceholder" xml:space="preserve"><value>Votre mot de passe</value></data>
+<data name="RememberMe" xml:space="preserve"><value>Se souvenir de moi</value></data>
+<data name="EmailRequired" xml:space="preserve"><value>Veuillez saisir votre email</value></data>
+<data name="PasswordRequired" xml:space="preserve"><value>Veuillez saisir votre mot de passe</value></data>
+<data name="ConnectionError" xml:space="preserve"><value>Erreur de connexion</value></data>
+<data name="InvalidCredentials" xml:space="preserve"><value>Email ou mot de passe incorrect</value></data>
+<data name="ServerConnectionError" xml:space="preserve"><value>Impossible de se connecter au serveur</value></data>
+<data name="ForgotPassword" xml:space="preserve"><value>Mot de passe oublié ?</value></data>
+<data name="NoAccount" xml:space="preserve"><value>Pas de compte ?</value></data>
+<data name="SignUp" xml:space="preserve"><value>S'inscrire</value></data>
+<data name="Register" xml:space="preserve"><value>Inscription</value></data>
+<data name="Language" xml:space="preserve"><value>Langue</value></data>
+<data name="ChooseLanguage" xml:space="preserve"><value>Choisir la langue</value></data>
+<data name="Cancel" xml:space="preserve"><value>Annuler</value></data>
+<data name="FeatureToImplement" xml:space="preserve"><value>Fonctionnalité à implémenter</value></data>
 </root>

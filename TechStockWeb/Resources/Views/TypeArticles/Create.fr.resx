@@ -110,4 +110,19 @@
   <data name="Back to List" xml:space="preserve">
     <value>Retour à la liste</value>
   </data>
+<data name="New Type Article" xml:space="preserve">
+    <value>nouveau type d'article</value>
+</data>
+<data name="Type Article Information" xml:space="preserve">
+    <value>Informations du type d'article</value>
+</data>
+<data name="Enter type name" xml:space="preserve">
+    <value>Entrez le nom du type d'article</value>
+</data>
+<data name="Save" xml:space="preserve">
+    <value>Enregistrer</value>
+</data>
+<data name="Cancel" xml:space="preserve">
+    <value>Annuler</value>
+</data>
 </root>

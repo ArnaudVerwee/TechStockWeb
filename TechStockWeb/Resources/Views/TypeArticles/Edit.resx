@@ -51,4 +51,52 @@
   <data name="Back to List" xml:space="preserve">
     <value>Back to List</value>
   </data>
+<data name="Name" xml:space="preserve">
+    <value>Name</value>
+</data>
+<data name="Type Article Information" xml:space="preserve">
+    <value>Type Article Information</value>
+</data>
+<data name="Enter name" xml:space="preserve">
+    <value>Enter the name</value>
+</data>
+<data name="Error" xml:space="preserve">
+    <value>Error</value>
+</data>
+<data name="Success" xml:space="preserve">
+    <value>Success</value>
+</data>
+<data name="Type name required" xml:space="preserve">
+    <value>The type article name is required.</value>
+</data>
+<data name="Type updated successfully" xml:space="preserve">
+    <value>Type article '{0}' updated successfully!</value>
+</data>
+<data name="Update failed" xml:space="preserve">
+    <value>Type article update failed</value>
+</data>
+<data name="An error occurred" xml:space="preserve">
+    <value>An error occurred</value>
+</data>
+<data name="Unsaved changes" xml:space="preserve">
+    <value>Unsaved changes</value>
+</data>
+<data name="Unsaved changes message" xml:space="preserve">
+    <value>You have unsaved changes. Do you really want to exit?</value>
+</data>
+<data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+</data>
+<data name="No" xml:space="preserve">
+    <value>No</value>
+</data>
+<data name="Language" xml:space="preserve">
+    <value>Language</value>
+</data>
+<data name="ChooseLanguage" xml:space="preserve">
+    <value>Choose language</value>
+</data>
+<data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+</data>
 </root>

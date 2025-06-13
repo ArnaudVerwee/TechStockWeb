@@ -119,5 +119,22 @@
 <data name="Delete" xml:space="preserve">
     <value>Supprimer</value>
 </data>
-
+<data name="NoSuppliersFound" xml:space="preserve"><value>Aucun fournisseur trouvé</value></data>
+<data name="LoadSuppliersError" xml:space="preserve"><value>Impossible de charger les fournisseurs</value></data>
+<data name="BackError" xml:space="preserve"><value>Impossible de retourner en arrière</value></data>
+<data name="CreatePageError" xml:space="preserve"><value>Impossible d'ouvrir la page de création</value></data>
+<data name="EditPageError" xml:space="preserve"><value>Impossible d'ouvrir la page de modification</value></data>
+<data name="DetailsError" xml:space="preserve"><value>Impossible d'ouvrir les détails</value></data>
+<data name="Confirmation" xml:space="preserve"><value>Confirmation</value></data>
+<data name="DeleteSupplierQuestion" xml:space="preserve"><value>Êtes-vous sûr de vouloir supprimer le fournisseur '{0}' ?</value></data>
+<data name="SupplierDeletedSuccessfully" xml:space="preserve"><value>Fournisseur supprimé avec succès</value></data>
+<data name="SupplierDeleteFailed" xml:space="preserve"><value>Échec de la suppression du fournisseur</value></data>
+<data name="DeleteSupplierError" xml:space="preserve"><value>Impossible de supprimer le fournisseur</value></data>
+<data name="Language" xml:space="preserve"><value>Langue</value></data>
+<data name="ChooseLanguage" xml:space="preserve"><value>Choisir la langue</value></data>
+<data name="Cancel" xml:space="preserve"><value>Annuler</value></data>
+<data name="Error" xml:space="preserve"><value>Erreur</value></data>
+<data name="Success" xml:space="preserve"><value>Succès</value></data>
+<data name="Yes" xml:space="preserve"><value>Oui</value></data>
+<data name="No" xml:space="preserve"><value>Non</value></data>
 </root>

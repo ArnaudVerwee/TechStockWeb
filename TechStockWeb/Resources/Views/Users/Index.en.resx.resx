@@ -98,55 +98,43 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
-<data name="Assign Product to User" xml:space="preserve">
-    <value>Assigner le produit à l'utilisateur</value>
+<data name="User Management" xml:space="preserve">
+    <value>User Management</value>
 </data>
-<data name="Product:" xml:space="preserve">
-    <value>Produit :</value>
+<data name="Username" xml:space="preserve">
+    <value>Username</value>
 </data>
-<data name="Serial Number:" xml:space="preserve">
-    <value>Numéro de série :</value>
+<data name="Roles" xml:space="preserve">
+    <value>Roles</value>
 </data>
-<data name="Select User:" xml:space="preserve">
-    <value>Sélectionner un utilisateur :</value>
+<data name="Actions" xml:space="preserve">
+    <value>Actions</value>
 </data>
-<data name="Select Product State:" xml:space="preserve">
-    <value>Sélectionner l'état du produit :</value>
+<data name="Manage Roles" xml:space="preserve">
+    <value>Manage Roles</value>
 </data>
-<data name="Assign" xml:space="preserve">
-    <value>Assigner</value>
+<data name="Welcome" xml:space="preserve">
+    <value>Welcome to TechStock</value>
 </data>
-<data name="Back to List" xml:space="preserve">
-    <value>Retour à la liste</value>
+<data name="ManageInventory" xml:space="preserve">
+    <value>Manage your technology inventory easily</value>
 </data>
-<data name="Assign a product to a user" xml:space="preserve">
-    <value>Assigner un produit à un utilisateur</value>
+<data name="QuickAccess" xml:space="preserve">
+    <value>Quick Access</value>
 </data>
-<data name="Assign Product" xml:space="preserve">
-    <value>Assigner le produit</value>
+<data name="Overview" xml:space="preserve">
+    <value>Overview</value>
 </data>
-<data name="Product Information" xml:space="preserve">
-    <value>Informations du produit</value>
+<data name="Total" xml:space="preserve">
+    <value>Total</value>
 </data>
-<data name="Select a user :" xml:space="preserve">
-    <value>Sélectionner un utilisateur :</value>
+<data name="Available" xml:space="preserve">
+    <value>Available</value>
 </data>
-<data name="Select a user" xml:space="preserve">
-    <value>Sélectionner un utilisateur</value>
+<data name="user found" xml:space="preserve">
+	<value>user found</value>
 </data>
-<data name="Select the product state:" xml:space="preserve">
-    <value>Sélectionner l'état du produit :</value>
-</data>
-<data name="Select a state" xml:space="preserve">
-    <value>Sélectionner un état</value>
-</data>
-<data name="Back to list" xml:space="preserve">
-    <value>Retour à la liste</value>
-</data>
-<data name="Product assigned successfully" xml:space="preserve">
-    <value>Produit assigné avec succès</value>
-</data>
-<data name="Assign Product" xml:space="preserve">
-    <value>Assigner le produit</value>
+<data name="users found" xml:space="preserve">
+    <value>users found</value> 
 </data>
 </root>

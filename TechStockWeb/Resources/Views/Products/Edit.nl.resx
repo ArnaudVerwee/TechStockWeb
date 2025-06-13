@@ -128,5 +128,15 @@
 <data name="Back to List" xml:space="preserve">
     <value>Terug naar de lijst</value>
 </data>
-
+<data name="ProductNamePlaceholder" xml:space="preserve"><value>Productnaam</value></data>
+<data name="SerialNumberPlaceholder" xml:space="preserve"><value>Serienummer</value></data>
+<data name="Language" xml:space="preserve"><value>Taal</value></data>
+<data name="ChooseLanguage" xml:space="preserve"><value>Taal kiezen</value></data>
+<data name="Cancel" xml:space="preserve"><value>Annuleren</value></data>
+<data name="Error" xml:space="preserve"><value>Fout</value></data>
+<data name="DataLoadError" xml:space="preserve"><value>Kan gegevens niet laden</value></data>
+<data name="Success" xml:space="preserve"><value>Succes</value></data>
+<data name="ProductModifiedSuccessfully" xml:space="preserve"><value>Product succesvol gewijzigd!</value></data>
+<data name="ProductModificationFailed" xml:space="preserve"><value>Product wijziging mislukt</value></data>
+<data name="ErrorOccurred" xml:space="preserve"><value>Er is een fout opgetreden</value></data>
 </root>

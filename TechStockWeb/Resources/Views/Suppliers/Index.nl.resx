@@ -119,5 +119,24 @@
 <data name="Delete" xml:space="preserve">
     <value>Verwijderen</value>
 </data>
-
+<data name="Suppliers" xml:space="preserve"><value>Leveranciers</value></data>
+<data name="Create New" xml:space="preserve"><value>Nieuwe aanmaken</value></data>
+<data name="NoSuppliersFound" xml:space="preserve"><value>Geen leveranciers gevonden</value></data>
+<data name="LoadSuppliersError" xml:space="preserve"><value>Kan leveranciers niet laden</value></data>
+<data name="BackError" xml:space="preserve"><value>Kan niet teruggaan</value></data>
+<data name="CreatePageError" xml:space="preserve"><value>Kan aanmaakpagina niet openen</value></data>
+<data name="EditPageError" xml:space="preserve"><value>Kan bewerkingspagina niet openen</value></data>
+<data name="DetailsError" xml:space="preserve"><value>Kan details niet openen</value></data>
+<data name="Confirmation" xml:space="preserve"><value>Bevestiging</value></data>
+<data name="DeleteSupplierQuestion" xml:space="preserve"><value>Weet u zeker dat u leverancier '{0}' wilt verwijderen?</value></data>
+<data name="SupplierDeletedSuccessfully" xml:space="preserve"><value>Leverancier succesvol verwijderd</value></data>
+<data name="SupplierDeleteFailed" xml:space="preserve"><value>Leverancier verwijderen mislukt</value></data>
+<data name="DeleteSupplierError" xml:space="preserve"><value>Kan leverancier niet verwijderen</value></data>
+<data name="Language" xml:space="preserve"><value>Taal</value></data>
+<data name="ChooseLanguage" xml:space="preserve"><value>Taal kiezen</value></data>
+<data name="Cancel" xml:space="preserve"><value>Annuleren</value></data>
+<data name="Error" xml:space="preserve"><value>Fout</value></data>
+<data name="Success" xml:space="preserve"><value>Succes</value></data>
+<data name="Yes" xml:space="preserve"><value>Ja</value></data>
+<data name="No" xml:space="preserve"><value>Nee</value></data>
 </root>

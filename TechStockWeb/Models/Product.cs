@@ -21,7 +21,7 @@ namespace TechStockWeb.Models
         [Required]
         public int TypeId { get; set; }
 
-        // IMPORTANT: Enlever [Required] sur les propriétés de navigation
+        
         public TypeArticle? TypeArticle { get; set; }
 
         [Display(Name = "Supplier")]
@@ -29,7 +29,7 @@ namespace TechStockWeb.Models
         [Required]
         public int SupplierId { get; set; }
 
-        // IMPORTANT: Enlever [Required] sur les propriétés de navigation
+        
         public Supplier? Supplier { get; set; }
 
         [Display(Name = "Assigned User")]

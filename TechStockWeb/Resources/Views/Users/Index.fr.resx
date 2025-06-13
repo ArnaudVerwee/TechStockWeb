@@ -113,5 +113,28 @@
 <data name="Manage Roles" xml:space="preserve">
     <value>Gérer les rôles</value>
 </data>
-
+<data name="Welcome" xml:space="preserve">
+    <value>Bienvenue sur TechStock</value>
+</data>
+<data name="ManageInventory" xml:space="preserve">
+    <value>Gérez votre inventaire technologique facilement</value>
+</data>
+<data name="QuickAccess" xml:space="preserve">
+    <value>Accès rapide</value>
+</data>
+<data name="Overview" xml:space="preserve">
+    <value>Aperçu</value>
+</data>
+<data name="Total" xml:space="preserve">
+    <value>Total</value>
+</data>
+<data name="Available" xml:space="preserve">
+    <value>Libres</value>
+</data>
+<data name="user found" xml:space="preserve">
+	<value>utilisateur trouvé</value>
+</data>
+<data name="users found" xml:space="preserve">
+    <value>utilisateur(s) trouvé(s)</value> 
+</data>
 </root>

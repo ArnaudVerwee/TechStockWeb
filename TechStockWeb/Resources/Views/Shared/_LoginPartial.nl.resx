@@ -107,4 +107,25 @@
  <data name="Logout" xml:space="preserve">
     <value>Afmelden</value>
   </data>
+<data name="Login" xml:space="preserve"><value>Inloggen</value></data>
+<data name="ConnectToAccount" xml:space="preserve"><value>Verbind met uw account</value></data>
+<data name="Email" xml:space="preserve"><value>E-mail</value></data>
+<data name="Password" xml:space="preserve"><value>Wachtwoord</value></data>
+<data name="EmailPlaceholder" xml:space="preserve"><value>uw.email@voorbeeld.com</value></data>
+<data name="PasswordPlaceholder" xml:space="preserve"><value>Uw wachtwoord</value></data>
+<data name="RememberMe" xml:space="preserve"><value>Onthoud mij</value></data>
+<data name="EmailRequired" xml:space="preserve"><value>Voer uw e-mail in</value></data>
+<data name="PasswordRequired" xml:space="preserve"><value>Voer uw wachtwoord in</value></data>
+<data name="ConnectionError" xml:space="preserve"><value>Verbindingsfout</value></data>
+<data name="InvalidCredentials" xml:space="preserve"><value>Ongeldig e-mail of wachtwoord</value></data>
+<data name="ServerConnectionError" xml:space="preserve"><value>Kan geen verbinding maken met server</value></data>
+<data name="ForgotPassword" xml:space="preserve"><value>Wachtwoord vergeten?</value></data>
+<data name="NoAccount" xml:space="preserve"><value>Geen account?</value></data>
+<data name="SignUp" xml:space="preserve"><value>Registreren</value></data>
+<data name="Register" xml:space="preserve"><value>Registratie</value></data>
+<data name="Language" xml:space="preserve"><value>Taal</value></data>
+<data name="ChooseLanguage" xml:space="preserve"><value>Taal kiezen</value></data>
+<data name="Cancel" xml:space="preserve"><value>Annuleren</value></data>
+<data name="FeatureToImplement" xml:space="preserve"><value>Functie te implementeren</value></data>
+
 </root>

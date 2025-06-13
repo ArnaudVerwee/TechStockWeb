@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 [Route("api/[controller]")]
 [ApiController]
-//[Authorize]
+
 public class UserController : ControllerBase  
 {
     private readonly UserManager<TechStockWebUser> _userManager;

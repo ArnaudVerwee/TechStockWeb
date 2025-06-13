@@ -107,4 +107,55 @@
   <data name="Actions" xml:space="preserve">
     <value>Actions</value>
   </data>
+<data name="Type List" xml:space="preserve">
+    <value>Type List</value>
+</data>
+<data name="Error" xml:space="preserve">
+    <value>Error</value>
+</data>
+<data name="Success" xml:space="preserve">
+    <value>Success</value>
+</data>
+<data name="Confirmation" xml:space="preserve">
+    <value>Confirmation</value>
+</data>
+<data name="Unable to load types" xml:space="preserve">
+    <value>Unable to load types</value>
+</data>
+<data name="Unable to open create page" xml:space="preserve">
+    <value>Unable to open create page</value>
+</data>
+<data name="Unable to open edit page" xml:space="preserve">
+    <value>Unable to open edit page</value>
+</data>
+<data name="Unable to open details" xml:space="preserve">
+    <value>Unable to open details</value>
+</data>
+<data name="Are you sure delete type" xml:space="preserve">
+    <value>Are you sure you want to delete the type</value>
+</data>
+<data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+</data>
+<data name="No" xml:space="preserve">
+    <value>No</value>
+</data>
+<data name="Type deleted successfully" xml:space="preserve">
+    <value>Type deleted successfully</value>
+</data>
+<data name="Delete failed" xml:space="preserve">
+    <value>Delete failed</value>
+</data>
+<data name="Unable to delete" xml:space="preserve">
+    <value>Unable to delete</value>
+</data>
+<data name="Language" xml:space="preserve">
+    <value>Language</value>
+</data>
+<data name="ChooseLanguage" xml:space="preserve">
+    <value>Choose language</value>
+</data>
+<data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+</data>
 </root>

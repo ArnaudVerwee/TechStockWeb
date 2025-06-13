@@ -116,10 +116,6 @@ namespace TechStockWeb.Controllers
         }
 
 
-
-
-
-        
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -211,7 +207,7 @@ namespace TechStockWeb.Controllers
             var typeArticle = await _context.TypeArticle.FindAsync(product.TypeId);
             var supplier = await _context.Supplier.FindAsync(product.SupplierId);
 
-            // Assigner les objets trouvés
+            
             product.TypeArticle = typeArticle;
             product.Supplier = supplier;
 
@@ -314,7 +310,7 @@ namespace TechStockWeb.Controllers
             var assignment = new MaterialManagement
             {
                 ProductId = id,
-                //UserId = userId
+                
             };
 
             _context.MaterialManagement.Add(assignment);

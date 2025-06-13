@@ -122,5 +122,73 @@
 <data name="Error loading user performance." xml:space="preserve">
     <value>Fout bij het laden van gebruikersprestaties.</value>
 </data>
-
+   <data name="ManageInventory" xml:space="preserve">
+        <value>Inventaris beheren</value>
+    </data>
+    <data name="ManageAccess" xml:space="preserve">
+        <value>Toegang beheren</value>
+    </data>
+    <data name="AssignedProducts" xml:space="preserve">
+        <value>Toegewezen producten</value>
+    </data>
+    <data name="MyProducts" xml:space="preserve">
+        <value>Mijn Producten</value>
+    </data>
+    <data name="ManageContacts" xml:space="preserve">
+        <value>Contacten beheren</value>
+    </data>
+    <data name="Overview" xml:space="preserve">
+        <value>Overzicht</value>
+    </data>
+    <data name="Available" xml:space="preserve">
+        <value>Beschikbaar</value>
+    </data>
+    <data name="Welcome" xml:space="preserve">
+        <value>Welkom bij TechStock</value>
+    </data>
+    <data name="Products" xml:space="preserve">
+        <value>Producten</value>
+    </data>
+    <data name="Suppliers" xml:space="preserve">
+        <value>Leveranciers</value>
+    </data>
+    <data name="Users" xml:space="preserve">
+        <value>Gebruikers</value>
+    </data>
+    <data name="QuickAccess" xml:space="preserve">
+        <value>Snelle toegang</value>
+    </data>
+    <data name="Total" xml:space="preserve">
+        <value>Totaal</value>
+    </data>
+    <data name="Error" xml:space="preserve">
+        <value>Fout</value>
+    </data>
+    <data name="Logout" xml:space="preserve">
+        <value>Uitloggen</value>
+    </data>
+    <data name="ConfirmLogout" xml:space="preserve">
+        <value>Weet je zeker dat je wilt uitloggen?</value>
+    </data>
+    <data name="Yes" xml:space="preserve">
+        <value>Ja</value>
+    </data>
+    <data name="No" xml:space="preserve">
+        <value>Nee</value>
+    </data>
+    <data name="Cancel" xml:space="preserve">
+        <value>Annuleren</value>
+    </data>
+    <data name="ChooseLanguage" xml:space="preserve">
+        <value>Taal kiezen</value>
+    </data>
+<data name="WelcomeMessage" xml:space="preserve">
+    <value>Beheer uw technologie-inventaris eenvoudig</value>
+</data>
+<data name="ManageInventoryShort" xml:space="preserve">
+    <value>Inventaris beheren</value>
+</data>
+<data name="Exit" xml:space="preserve">
+    <value>Uitgang</value>
+</data>
 </root>

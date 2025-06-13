@@ -16,7 +16,7 @@ namespace TechStockWeb.ApiControllers
             _context = context;
         }
 
-        // GET: api/statistics
+       
         [HttpGet]
         public async Task<IActionResult> GetStatistics()
         {

@@ -107,4 +107,13 @@
   <data name="Actions" xml:space="preserve">
     <value>Acties</value>
   </data>
+<data name="Type List" xml:space="preserve">
+    <value>Type Lijst</value>
+</data>
+<data name="Error" xml:space="preserve">
+    <value>Fout</value>
+</data>
+	<data name="Success" xml:space="preserve">
+    <value>Succes</value>
+</data>
 </root>

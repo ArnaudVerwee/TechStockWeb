@@ -128,5 +128,16 @@
 <data name="Back to List" xml:space="preserve">
     <value>Retour à la liste</value>
 </data>
+<data name="ProductNamePlaceholder" xml:space="preserve"><value>Nom du produit</value></data>
+<data name="SerialNumberPlaceholder" xml:space="preserve"><value>Numéro de série</value></data>
+<data name="Language" xml:space="preserve"><value>Langue</value></data>
+<data name="ChooseLanguage" xml:space="preserve"><value>Choisir la langue</value></data>
+<data name="Cancel" xml:space="preserve"><value>Annuler</value></data>
+<data name="Error" xml:space="preserve"><value>Erreur</value></data>
+<data name="DataLoadError" xml:space="preserve"><value>Impossible de charger les données</value></data>
+<data name="Success" xml:space="preserve"><value>Succès</value></data>
+<data name="ProductModifiedSuccessfully" xml:space="preserve"><value>Produit modifié avec succès!</value></data>
+<data name="ProductModificationFailed" xml:space="preserve"><value>Échec de la modification du produit</value></data>
+<data name="ErrorOccurred" xml:space="preserve"><value>Une erreur s'est produite</value></data>
 
 </root>

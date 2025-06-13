@@ -110,5 +110,19 @@
 <data name="Back to List" xml:space="preserve">
     <value>Retour à la liste</value>
 </data>
+<data name="EnterSupplierName" xml:space="preserve"><value>Entrez le nom du fournisseur</value></data>
+<data name="SupplierNameRequired" xml:space="preserve"><value>Le nom du fournisseur est obligatoire.</value></data>
+<data name="SupplierCreatedSuccessfully" xml:space="preserve"><value>Fournisseur '{0}' créé avec succès!</value></data>
+<data name="SupplierCreationFailed" xml:space="preserve"><value>Échec de la création du fournisseur</value></data>
+<data name="ErrorOccurred" xml:space="preserve"><value>Une erreur s'est produite</value></data>
+<data name="Create" xml:space="preserve"><value>Create</value></data>
+<data name="Supplier" xml:space="preserve"><value>Supplier</value></data>
+<data name="Name" xml:space="preserve"><value>Name</value></data>
+<data name="Back to List" xml:space="preserve"><value>Back to List</value></data>
+<data name="EnterSupplierName" xml:space="preserve"><value>Enter supplier name</value></data>
+<data name="SupplierNameRequired" xml:space="preserve"><value>Supplier name is required.</value></data>
+<data name="SupplierCreatedSuccessfully" xml:space="preserve"><value>Supplier '{0}' created successfully!</value></data>
+<data name="SupplierCreationFailed" xml:space="preserve"><value>Supplier creation failed</value></data>
+<data name="ErrorOccurred" xml:space="preserve"><value>An error occurred</value></data>
 
 </root>

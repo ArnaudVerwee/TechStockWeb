@@ -19,14 +19,14 @@ namespace TechStockWeb.ApiControllers
             _context = context;
         }
 
-        // GET: api/states
+        
         [HttpGet]
         public async Task<ActionResult<IEnumerable<States>>> GetStates()
         {
             return await _context.States.ToListAsync();
         }
 
-        // GET: api/states/{id}
+       
         [HttpGet("{id}")]
         public async Task<ActionResult<States>> GetState(int id)
         {
@@ -40,7 +40,7 @@ namespace TechStockWeb.ApiControllers
             return state;
         }
 
-        // POST: api/states
+        
         [HttpPost]
         public async Task<ActionResult<States>> CreateState([FromBody] States state)
         {
@@ -55,7 +55,7 @@ namespace TechStockWeb.ApiControllers
             return BadRequest(ModelState);
         }
 
-        // PUT: api/states/{id}
+        
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateState(int id, [FromBody] States state)
         {
@@ -85,7 +85,7 @@ namespace TechStockWeb.ApiControllers
             return NoContent();
         }
 
-        // DELETE: api/states/{id}
+        
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteState(int id)
         {

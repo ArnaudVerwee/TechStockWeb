@@ -107,4 +107,19 @@
   <data name="Actions" xml:space="preserve">
     <value>Actions</value>
   </data>
+<data name="Type List" xml:space="preserve">
+    <value>Liste des types</value>
+</data>
+<data name="Error" xml:space="preserve">
+    <value>Erreur</value>
+</data>
+<data name="Success" xml:space="preserve">
+    <value>Succès</value>
+</data>
+<data name="Confirmation" xml:space="preserve">
+    <value>Confirmation</value>
+</data>
+<data name="Unable to load types" xml:space="preserve">
+    <value>Impossible de charger les types</value>
+</data>
 </root>

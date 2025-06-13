@@ -10,7 +10,7 @@ namespace TechStockWeb.Controllers.Api
 {
     [Route("api/[controller]")]
     [ApiController]
-    
+
     public class ProductController : ControllerBase
     {
         private readonly TechStockContext _context;
@@ -20,7 +20,6 @@ namespace TechStockWeb.Controllers.Api
             _context = context;
         }
 
-        // GET: api/Product
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
@@ -32,7 +31,6 @@ namespace TechStockWeb.Controllers.Api
             return Ok(products);
         }
 
-        // GET: api/Product/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
@@ -55,7 +53,6 @@ namespace TechStockWeb.Controllers.Api
         {
             try
             {
-                // SOLUTION: Créer un nouveau produit avec seulement les IDs
                 var newProduct = new Product
                 {
                     Name = product.Name,
@@ -63,27 +60,24 @@ namespace TechStockWeb.Controllers.Api
                     TypeId = product.TypeId,
                     SupplierId = product.SupplierId,
                     AssignedUserId = product.AssignedUserId
-                    // Ne pas inclure TypeArticle et Supplier - seulement les IDs
                 };
 
-                // Vérifier que les IDs existent
                 var typeExists = await _context.TypeArticle.AnyAsync(t => t.Id == product.TypeId);
                 var supplierExists = await _context.Supplier.AnyAsync(s => s.Id == product.SupplierId);
 
                 if (!typeExists)
                 {
-                    return BadRequest($"TypeArticle avec l'ID {product.TypeId} n'existe pas.");
+                    return BadRequest($"TypeArticle with ID {product.TypeId} does not exist.");
                 }
 
                 if (!supplierExists)
                 {
-                    return BadRequest($"Supplier avec l'ID {product.SupplierId} n'existe pas.");
+                    return BadRequest($"Supplier with ID {product.SupplierId} does not exist.");
                 }
 
                 _context.Products.Add(newProduct);
                 await _context.SaveChangesAsync();
 
-                // Récupérer le produit créé avec toutes les relations
                 var createdProduct = await _context.Products
                     .Include(p => p.TypeArticle)
                     .Include(p => p.Supplier)
@@ -94,7 +88,7 @@ namespace TechStockWeb.Controllers.Api
             }
             catch (Exception ex)
             {
-                return BadRequest($"Erreur lors de la création du produit: {ex.Message}");
+                return BadRequest($"Error creating product: {ex.Message}");
             }
         }
 
@@ -108,14 +102,12 @@ namespace TechStockWeb.Controllers.Api
 
             try
             {
-                // Récupérer le produit existant
                 var existingProduct = await _context.Products.FindAsync(id);
                 if (existingProduct == null)
                 {
                     return NotFound();
                 }
 
-                // Mettre à jour seulement les propriétés nécessaires
                 existingProduct.Name = product.Name;
                 existingProduct.SerialNumber = product.SerialNumber;
                 existingProduct.TypeId = product.TypeId;
@@ -127,11 +119,10 @@ namespace TechStockWeb.Controllers.Api
             }
             catch (Exception ex)
             {
-                return BadRequest($"Erreur lors de la mise à jour: {ex.Message}");
+                return BadRequest($"Error updating product: {ex.Message}");
             }
         }
 
-        // DELETE: api/Product/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
@@ -148,81 +139,115 @@ namespace TechStockWeb.Controllers.Api
 
         [HttpGet("filter")]
         public async Task<ActionResult<IEnumerable<object>>> GetProductsFilter(
-    [FromQuery] string? name = null,
-    [FromQuery] string? serialNumber = null,
-    [FromQuery] int? typeId = null,
-    [FromQuery] int? supplierId = null,
-    [FromQuery] string? userId = null)
+            [FromQuery] string? name = null,
+            [FromQuery] string? serialNumber = null,
+            [FromQuery] int? typeId = null,
+            [FromQuery] int? supplierId = null,
+            [FromQuery] string? userId = null)
         {
-            var query = _context.Products
-                .Include(p => p.TypeArticle)
-                .Include(p => p.Supplier)
-                .AsQueryable();
-
-            // ✅ FILTRES NORMAUX
-            if (!string.IsNullOrWhiteSpace(name))
-                query = query.Where(p => p.Name.Contains(name));
-
-            if (!string.IsNullOrWhiteSpace(serialNumber))
-                query = query.Where(p => p.SerialNumber.Contains(serialNumber));
-
-            if (typeId.HasValue)
-                query = query.Where(p => p.TypeId == typeId.Value);
-
-            if (supplierId.HasValue)
-                query = query.Where(p => p.SupplierId == supplierId.Value);
-
-            // ✅ FILTRE UTILISATEUR AVEC MATERIALMANAGEMENT
-            if (!string.IsNullOrWhiteSpace(userId))
+            try
             {
-                if (userId == "NotAssigned")
+                Console.WriteLine($"API Filter - Received parameters:");
+                Console.WriteLine($"  name: '{name}'");
+                Console.WriteLine($"  serialNumber: '{serialNumber}'");
+                Console.WriteLine($"  typeId: {typeId}");
+                Console.WriteLine($"  supplierId: {supplierId}");
+                Console.WriteLine($"  userId: '{userId}'");
+
+                if (!string.IsNullOrEmpty(userId))
                 {
-                    // Produits NON assignés
-                    query = from p in query
-                            join m in _context.MaterialManagement on p.Id equals m.ProductId into assignments
-                            from assignment in assignments.DefaultIfEmpty()
-                            where assignment == null
-                            select p;
+                    var decodedUserId = Uri.UnescapeDataString(userId);
+                    Console.WriteLine($"  userId decoded: '{decodedUserId}'");
+                    userId = decodedUserId;
                 }
-                else if (userId != "All")
+
+                var query = _context.Products
+                    .Include(p => p.TypeArticle)
+                    .Include(p => p.Supplier)
+                    .AsQueryable();
+
+                if (!string.IsNullOrWhiteSpace(name))
+                    query = query.Where(p => p.Name.Contains(name));
+
+                if (!string.IsNullOrWhiteSpace(serialNumber))
+                    query = query.Where(p => p.SerialNumber.Contains(serialNumber));
+
+                if (typeId.HasValue)
+                    query = query.Where(p => p.TypeId == typeId.Value);
+
+                if (supplierId.HasValue)
+                    query = query.Where(p => p.SupplierId == supplierId.Value);
+
+                if (!string.IsNullOrWhiteSpace(userId))
                 {
-                    // Produits assignés à un utilisateur spécifique
-                    query = from p in query
-                            join m in _context.MaterialManagement on p.Id equals m.ProductId into assignments
-                            from assignment in assignments.DefaultIfEmpty()
-                            where assignment != null && assignment.UserId == userId
-                            select p;
+                    Console.WriteLine($"Filtering by userId: '{userId}'");
+
+                    if (userId == "NotAssigned")
+                    {
+                        var assignedProductIds = _context.MaterialManagement.Select(m => m.ProductId).ToList();
+                        query = query.Where(p => !assignedProductIds.Contains(p.Id));
+                        Console.WriteLine("Filtering for NOT ASSIGNED products");
+                    }
+                    else if (userId != "All")
+                    {
+                        var assignedProductIds = _context.MaterialManagement
+                            .Where(m => m.UserId == userId)
+                            .Select(m => m.ProductId)
+                            .ToList();
+
+                        query = query.Where(p => assignedProductIds.Contains(p.Id));
+
+                        Console.WriteLine($"Found {assignedProductIds.Count} products assigned to user '{userId}'");
+                        Console.WriteLine($"Assigned product IDs: [{string.Join(", ", assignedProductIds)}]");
+                    }
                 }
+
+                var products = await query.ToListAsync();
+                Console.WriteLine($"Query returned {products.Count} products");
+
+                var materialAssignments = await _context.MaterialManagement
+                    .Include(m => m.User)
+                    .ToListAsync();
+
+                Console.WriteLine($"Total material assignments: {materialAssignments.Count}");
+
+                var result = products.Select(p => {
+                    var assignment = materialAssignments.FirstOrDefault(m => m.ProductId == p.Id);
+
+                    string assignedUserName = null;
+                    if (assignment?.User != null && !string.IsNullOrEmpty(assignment.User.UserName))
+                    {
+                        assignedUserName = assignment.User.UserName;
+                    }
+
+                    var productResult = new
+                    {
+                        p.Id,
+                        p.Name,
+                        p.SerialNumber,
+                        p.TypeId,
+                        p.SupplierId,
+                        p.AssignedUserId,
+                        TypeName = p.TypeArticle?.Name,
+                        SupplierName = p.Supplier?.Name,
+                        AssignedUserName = assignedUserName
+                    };
+
+                    Console.WriteLine($"Product '{p.Name}' -> AssignedUserName: '{productResult.AssignedUserName}' (IsNull: {productResult.AssignedUserName == null})");
+                    return productResult;
+                }).ToList();
+
+                Console.WriteLine($"Final result: {result.Count} products returned");
+                return Ok(result);
             }
-
-            var products = await query.ToListAsync();
-
-            // ✅ RÉCUPÉRER LES ASSIGNATIONS SÉPARÉMENT
-            var materialAssignments = await _context.MaterialManagement
-                .Include(m => m.User)
-                .ToListAsync();
-
-            var result = products.Select(p => {
-                // ✅ TROUVER L'ASSIGNATION POUR CE PRODUIT
-                var assignment = materialAssignments.FirstOrDefault(m => m.ProductId == p.Id);
-
-                return new
-                {
-                    p.Id,
-                    p.Name,
-                    p.SerialNumber,
-                    p.TypeId,
-                    p.SupplierId,
-                    p.AssignedUserId, // Garde pour compatibilité (sera null)
-                    TypeName = p.TypeArticle?.Name,
-                    SupplierName = p.Supplier?.Name,
-                    // ✅ ASSIGNATION VIA MATERIALMANAGEMENT
-                    AssignedUserName = assignment?.User?.UserName
-                };
-            });
-
-            return Ok(result);
+            catch (Exception ex)
+            {
+                Console.WriteLine($"API Error: {ex.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
+                return StatusCode(500, $"Internal error: {ex.Message}");
+            }
         }
+
         [HttpDelete("product/{productId}")]
         public async Task<IActionResult> UnassignByProductId(int productId)
         {
@@ -233,17 +258,17 @@ namespace TechStockWeb.Controllers.Api
 
                 if (assignment == null)
                 {
-                    return NotFound(new { message = "Ce produit n'est pas assigné" });
+                    return NotFound(new { message = "This product is not assigned" });
                 }
 
                 _context.MaterialManagement.Remove(assignment);
                 await _context.SaveChangesAsync();
 
-                return Ok(new { message = "Produit désassigné avec succès" });
+                return Ok(new { message = "Product unassigned successfully" });
             }
             catch (Exception ex)
             {
-                return BadRequest(new { message = $"Erreur: {ex.Message}" });
+                return BadRequest(new { message = $"Error: {ex.Message}" });
             }
         }
     }

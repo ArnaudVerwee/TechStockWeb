@@ -152,4 +152,40 @@
 <data name="TypeArticle" xml:space="preserve">
     <value>Type d'article</value>
 </data>
+<data name="Products" xml:space="preserve"><value>Produits</value></data>
+<data name="ProductManagement" xml:space="preserve"><value>Gestion des Produits</value></data>
+<data name="Search" xml:space="preserve"><value>Rechercher</value></data>
+<data name="Reset" xml:space="preserve"><value>Reset</value></data>
+<data name="NamePlaceholder" xml:space="preserve"><value>Nom...</value></data>
+<data name="SerialPlaceholder" xml:space="preserve"><value>N° série...</value></data>
+<data name="Type" xml:space="preserve"><value>Type</value></data>
+<data name="Supplier" xml:space="preserve"><value>Fournisseur</value></data>
+<data name="User" xml:space="preserve"><value>Utilisateur</value></data>
+<data name="Name" xml:space="preserve"><value>Nom</value></data>
+<data name="SerialNumber" xml:space="preserve"><value>N° Série</value></data>
+<data name="Actions" xml:space="preserve"><value>Actions</value></data>
+<data name="NotAssigned" xml:space="preserve"><value>Non assigné</value></data>
+<data name="All" xml:space="preserve"><value>Tous</value></data>
+<data name="UnnamedUser" xml:space="preserve"><value>Utilisateur sans nom</value></data>
+<data name="LoadingError" xml:space="preserve"><value>Erreur de chargement</value></data>
+<data name="SearchError" xml:space="preserve"><value>Erreur de recherche</value></data>
+<data name="ResetError" xml:space="preserve"><value>Erreur de reset</value></data>
+<data name="CannotOpenEditPage" xml:space="preserve"><value>Impossible d'ouvrir la page d'édition</value></data>
+<data name="NavigationError" xml:space="preserve"><value>Erreur de navigation</value></data>
+<data name="Details" xml:space="preserve"><value>Détails</value></data>
+<data name="Confirm" xml:space="preserve"><value>Confirmer</value></data>
+<data name="UnassignQuestion" xml:space="preserve"><value>Désassigner {0} de {1} ?</value></data>
+<data name="DeleteQuestion" xml:space="preserve"><value>Supprimer {0} ?</value></data>
+<data name="Yes" xml:space="preserve"><value>Oui</value></data>
+<data name="No" xml:space="preserve"><value>Non</value></data>
+<data name="Success" xml:space="preserve"><value>Succès</value></data>
+<data name="ProductUnassigned" xml:space="preserve"><value>{0} a été désassigné</value></data>
+<data name="ProductDeleted" xml:space="preserve"><value>Produit supprimé</value></data>
+<data name="UnassignFailed" xml:space="preserve"><value>Échec de la désassignation</value></data>
+<data name="UnassignError" xml:space="preserve"><value>Erreur lors de la désassignation</value></data>
+<data name="DeleteFailed" xml:space="preserve"><value>Échec de la suppression</value></data>
+<data name="DeleteError" xml:space="preserve"><value>Erreur de suppression</value></data>
+<data name="Error" xml:space="preserve"><value>Erreur</value></data>
+<data name="Cancel" xml:space="preserve"><value>Annuler</value></data>
+<data name="ChooseLanguage" xml:space="preserve"><value>Choisir la langue</value></data>
 </root>

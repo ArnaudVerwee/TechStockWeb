@@ -123,4 +123,45 @@
   <data name="Privacy" xml:space="preserve">
     <value>Privacy</value>
   </data>
+<data name="ConnectToAccount" xml:space="preserve">
+    <value>Connect to your account</value>
+</data>
+<data name="EmailPlaceholder" xml:space="preserve">
+    <value>your.email@example.com</value>
+</data>
+<data name="PasswordPlaceholder" xml:space="preserve">
+    <value>Your password</value>
+</data>
+<data name="ForgotPassword" xml:space="preserve">
+    <value>Forgot password?</value>
+</data>
+<data name="NoAccount" xml:space="preserve">
+    <value>No account?</value>
+</data>
+<data name="SignUp" xml:space="preserve">
+    <value>Sign up</value>
+</data>
+<data name="EmailRequired" xml:space="preserve">
+    <value>Please enter your email</value>
+</data>
+<data name="PasswordRequired" xml:space="preserve">
+    <value>Please enter your password</value>
+</data>
+<data name="ConnectionError" xml:space="preserve">
+    <value>Connection error</value>
+</data>
+<data name="InvalidCredentials" xml:space="preserve">
+    <value>Invalid email or password</value>
+</data>
+<data name="ServerConnectionError" xml:space="preserve">
+    <value>Unable to connect to server</value>
+</data>
+<data name="FeatureToImplement" xml:space="preserve">
+    <value>Feature to implement</value>
+</data>
+
+<data name="RememberMe" xml:space="preserve">
+    <value>Remember me</value>
+</data>
+
 </root>

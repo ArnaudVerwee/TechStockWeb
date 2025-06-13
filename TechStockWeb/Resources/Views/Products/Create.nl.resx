@@ -128,4 +128,22 @@
     <data name="BackToList" xml:space="preserve">
         <value>Terug naar de lijst</value>
     </data>
+<data name="EnterProductName" xml:space="preserve"><value>Voer productnaam in</value></data>
+<data name="EnterSerialNumber" xml:space="preserve"><value>Voer serienummer in</value></data>
+<data name="Language" xml:space="preserve"><value>Taal</value></data>
+<data name="ChooseLanguage" xml:space="preserve"><value>Taal kiezen</value></data>
+<data name="Cancel" xml:space="preserve"><value>Annuleren</value></data>
+<data name="Warning" xml:space="preserve"><value>Waarschuwing</value></data>
+<data name="NoSupplierAvailable" xml:space="preserve"><value>Geen leverancier beschikbaar</value></data>
+<data name="NoTypeAvailable" xml:space="preserve"><value>Geen type beschikbaar</value></data>
+<data name="Error" xml:space="preserve"><value>Fout</value></data>
+<data name="DataLoadError" xml:space="preserve"><value>Kan gegevens niet laden</value></data>
+<data name="NameRequired" xml:space="preserve"><value>Productnaam is vereist</value></data>
+<data name="SerialNumberRequired" xml:space="preserve"><value>Serienummer is vereist</value></data>
+<data name="PleaseSelectType" xml:space="preserve"><value>Selecteer een type</value></data>
+<data name="PleaseSelectSupplier" xml:space="preserve"><value>Selecteer een leverancier</value></data>
+<data name="Success" xml:space="preserve"><value>Succes</value></data>
+<data name="ProductCreatedSuccessfully" xml:space="preserve"><value>Product succesvol aangemaakt</value></data>
+<data name="ProductCreationFailed" xml:space="preserve"><value>Product aanmaken mislukt</value></data>
+<data name="CreationError" xml:space="preserve"><value>Fout bij aanmaken</value></data>
 </root>

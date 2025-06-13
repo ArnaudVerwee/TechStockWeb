@@ -11,7 +11,6 @@ namespace TechStockWeb.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = "Bearer")]
     public class AuthController : ControllerBase
     {
         private readonly UserManager<TechStockWebUser> _userManager;
@@ -28,7 +27,6 @@ namespace TechStockWeb.Controllers
             _configuration = configuration;
         }
 
-        // POST: api/Auth/Login
         [HttpPost("Login")]
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
@@ -37,24 +35,22 @@ namespace TechStockWeb.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    return BadRequest(new { message = "Données invalides" });
+                    return BadRequest(new { message = "Invalid data" });
                 }
 
-                // Rechercher l'utilisateur par email
+
                 var user = await _userManager.FindByEmailAsync(request.Email);
                 if (user == null)
                 {
-                    return Unauthorized(new { message = "Email ou mot de passe incorrect" });
+                    return Unauthorized(new { message = "Incorrect email or password" });
                 }
 
-                // Vérifier le mot de passe
                 var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
                 if (!result.Succeeded)
                 {
-                    return Unauthorized(new { message = "Email ou mot de passe incorrect" });
+                    return Unauthorized(new { message = "Incorrect email or password" });
                 }
 
-                // Générer le token JWT
                 var token = await GenerateJwtTokenAsync(user);
 
                 return Ok(new LoginResponse
@@ -67,11 +63,10 @@ namespace TechStockWeb.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = $"Erreur interne: {ex.Message}" });
+                return StatusCode(500, new { message = $"Internal error: {ex.Message}" });
             }
         }
 
-        // POST: api/Auth/Register
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
@@ -79,43 +74,39 @@ namespace TechStockWeb.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    return BadRequest(new { message = "Données invalides" });
+                    return BadRequest(new { message = "Invalid data" });
                 }
 
-                // Vérifier si l'utilisateur existe déjà
                 var existingUser = await _userManager.FindByEmailAsync(request.Email);
                 if (existingUser != null)
                 {
-                    return BadRequest(new { message = "Un utilisateur avec cet email existe déjà" });
+                    return BadRequest(new { message = "A user with this email already exists" });
                 }
 
-                // Créer le nouvel utilisateur
                 var user = new TechStockWebUser
                 {
                     UserName = request.Email,
                     Email = request.Email,
-                    EmailConfirmed = true // Pour simplifier, on confirme automatiquement
+                    EmailConfirmed = true
                 };
 
                 var result = await _userManager.CreateAsync(user, request.Password);
                 if (!result.Succeeded)
                 {
                     var errors = string.Join(", ", result.Errors.Select(e => e.Description));
-                    return BadRequest(new { message = $"Erreur lors de la création: {errors}" });
+                    return BadRequest(new { message = $"Creation error: {errors}" });
                 }
 
-                // Ajouter un rôle par défaut si nécessaire
                 await _userManager.AddToRoleAsync(user, "User");
 
-                return Ok(new { message = "Utilisateur créé avec succès" });
+                return Ok(new { message = "User created successfully" });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = $"Erreur interne: {ex.Message}" });
+                return StatusCode(500, new { message = $"Internal error: {ex.Message}" });
             }
         }
 
-        // GET: api/Auth/ValidateToken
         [HttpGet("ValidateToken")]
         [Authorize]
         public IActionResult ValidateToken()
@@ -131,17 +122,13 @@ namespace TechStockWeb.Controllers
             });
         }
 
-        // POST: api/Auth/Logout
         [HttpPost("Logout")]
         [Authorize]
         public async Task<IActionResult> Logout()
         {
-            // Pour un token JWT, la déconnexion se fait côté client
-            // Ici on pourrait ajouter le token à une blacklist si nécessaire
-            return Ok(new { message = "Déconnexion réussie" });
+            return Ok(new { message = "Logout successful" });
         }
 
-        // GET: api/Auth/Profile
         [HttpGet("Profile")]
         [Authorize]
         public async Task<IActionResult> GetProfile()
@@ -151,7 +138,7 @@ namespace TechStockWeb.Controllers
 
             if (user == null)
             {
-                return NotFound(new { message = "Utilisateur non trouvé" });
+                return NotFound(new { message = "User not found" });
             }
 
             var roles = await _userManager.GetRolesAsync(user);
@@ -168,7 +155,7 @@ namespace TechStockWeb.Controllers
         private async Task<string> GenerateJwtTokenAsync(TechStockWebUser user)
         {
             var jwtSettings = _configuration.GetSection("JwtSettings");
-            var secretKey = jwtSettings["SecretKey"] ?? "YourVeryLongSecretKeyHere123456789"; // Clé par défaut
+            var secretKey = jwtSettings["SecretKey"] ?? "YourVeryLongSecretKeyHere123456789";
             var issuer = jwtSettings["Issuer"] ?? "TechStockAPI";
             var audience = jwtSettings["Audience"] ?? "TechStockMaui";
 
@@ -178,14 +165,13 @@ namespace TechStockWeb.Controllers
             var roles = await _userManager.GetRolesAsync(user);
 
             var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-            };
+           {
+               new Claim(ClaimTypes.NameIdentifier, user.Id),
+               new Claim(ClaimTypes.Email, user.Email),
+               new Claim(ClaimTypes.Name, user.UserName),
+               new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+           };
 
-            // Ajouter les rôles comme claims
             foreach (var role in roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
@@ -195,7 +181,7 @@ namespace TechStockWeb.Controllers
                 issuer: issuer,
                 audience: audience,
                 claims: claims,
-                expires: DateTime.UtcNow.AddDays(7), // Token valide 7 jours
+                expires: DateTime.UtcNow.AddDays(7),
                 signingCredentials: credentials
             );
 
@@ -203,7 +189,6 @@ namespace TechStockWeb.Controllers
         }
     }
 
-    // DTOs pour les requêtes
     public class LoginRequest
     {
         public string Email { get; set; } = string.Empty;

@@ -110,4 +110,55 @@
   <data name="Back to List" xml:space="preserve">
     <value>Back to List</value>
   </data>
+<data name="New Type Article" xml:space="preserve">
+    <value>new type article</value>
+</data>
+<data name="Type Article Information" xml:space="preserve">
+    <value>Type Article Information</value>
+</data>
+<data name="Enter type name" xml:space="preserve">
+    <value>Enter the type article name</value>
+</data>
+<data name="Save" xml:space="preserve">
+    <value>Save</value>
+</data>
+<data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+</data>
+<data name="Error" xml:space="preserve">
+    <value>Error</value>
+</data>
+<data name="Success" xml:space="preserve">
+    <value>Success</value>
+</data>
+<data name="Type name required" xml:space="preserve">
+    <value>The type article name is required.</value>
+</data>
+<data name="Type created successfully" xml:space="preserve">
+    <value>Type article '{0}' created successfully!</value>
+</data>
+<data name="Creation failed" xml:space="preserve">
+    <value>Type article creation failed</value>
+</data>
+<data name="An error occurred" xml:space="preserve">
+    <value>An error occurred</value>
+</data>
+<data name="Confirmation" xml:space="preserve">
+    <value>Confirmation</value>
+</data>
+<data name="Cancel confirmation message" xml:space="preserve">
+    <value>Do you really want to cancel? Entered data will be lost.</value>
+</data>
+<data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+</data>
+<data name="No" xml:space="preserve">
+    <value>No</value>
+</data>
+<data name="Language" xml:space="preserve">
+    <value>Language</value>
+</data>
+<data name="ChooseLanguage" xml:space="preserve">
+    <value>Choose language</value>
+</data>
 </root>

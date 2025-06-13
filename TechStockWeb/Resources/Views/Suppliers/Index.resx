@@ -119,5 +119,24 @@
 <data name="Delete" xml:space="preserve">
     <value>Delete</value>
 </data>
-
+<data name="Suppliers" xml:space="preserve"><value>Suppliers</value></data>
+<data name="Create New" xml:space="preserve"><value>Create New</value></data>
+<data name="NoSuppliersFound" xml:space="preserve"><value>No suppliers found</value></data>
+<data name="LoadSuppliersError" xml:space="preserve"><value>Unable to load suppliers</value></data>
+<data name="BackError" xml:space="preserve"><value>Unable to go back</value></data>
+<data name="CreatePageError" xml:space="preserve"><value>Unable to open creation page</value></data>
+<data name="EditPageError" xml:space="preserve"><value>Unable to open edit page</value></data>
+<data name="DetailsError" xml:space="preserve"><value>Unable to open details</value></data>
+<data name="Confirmation" xml:space="preserve"><value>Confirmation</value></data>
+<data name="DeleteSupplierQuestion" xml:space="preserve"><value>Are you sure you want to delete supplier '{0}'?</value></data>
+<data name="SupplierDeletedSuccessfully" xml:space="preserve"><value>Supplier deleted successfully</value></data>
+<data name="SupplierDeleteFailed" xml:space="preserve"><value>Supplier deletion failed</value></data>
+<data name="DeleteSupplierError" xml:space="preserve"><value>Unable to delete supplier</value></data>
+<data name="Language" xml:space="preserve"><value>Language</value></data>
+<data name="ChooseLanguage" xml:space="preserve"><value>Choose language</value></data>
+<data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+<data name="Error" xml:space="preserve"><value>Error</value></data>
+<data name="Success" xml:space="preserve"><value>Success</value></data>
+<data name="Yes" xml:space="preserve"><value>Yes</value></data>
+<data name="No" xml:space="preserve"><value>No</value></data>
 </root>

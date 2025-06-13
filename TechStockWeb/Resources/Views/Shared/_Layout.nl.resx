@@ -138,4 +138,43 @@
 <data name="TypeArticles" xml:space="preserve">
     <value>Producttype</value>
 </data>
+<data name="ConnectToAccount" xml:space="preserve">
+    <value>Log in op uw account</value>
+</data>
+<data name="EmailPlaceholder" xml:space="preserve">
+    <value>uw.email@voorbeeld.com</value>
+</data>
+<data name="PasswordPlaceholder" xml:space="preserve">
+    <value>Uw wachtwoord</value>
+</data>
+<data name="ForgotPassword" xml:space="preserve">
+    <value>Wachtwoord vergeten?</value>
+</data>
+<data name="NoAccount" xml:space="preserve">
+    <value>Geen account?</value>
+</data>
+<data name="SignUp" xml:space="preserve">
+    <value>Registreren</value>
+</data>
+<data name="EmailRequired" xml:space="preserve">
+    <value>Voer uw e-mailadres in</value>
+</data>
+<data name="PasswordRequired" xml:space="preserve">
+    <value>Voer uw wachtwoord in</value>
+</data>
+<data name="ConnectionError" xml:space="preserve">
+    <value>Verbindingsfout</value>
+</data>
+<data name="InvalidCredentials" xml:space="preserve">
+    <value>Onjuist e-mailadres of wachtwoord</value>
+</data>
+<data name="ServerConnectionError" xml:space="preserve">
+    <value>Kan geen verbinding maken met de server</value>
+</data>
+<data name="FeatureToImplement" xml:space="preserve">
+    <value>Functie om te implementeren</value>
+</data>
+<data name="RememberMe" xml:space="preserve">
+    <value>Onthoud mij</value>
+</data>
 </root>

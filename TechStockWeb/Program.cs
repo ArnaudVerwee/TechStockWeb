@@ -33,17 +33,17 @@ builder.Services.AddDbContext<TechStockContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("TechStock")
     ?? throw new InvalidOperationException("Connection string 'TechStock' not found.")));
 
-// 1. Configuration Identity (pour l'authentification web)
+
 builder.Services.AddDefaultIdentity<TechStockWebUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<TechStockContext>();
 
-// 2. Configuration JWT (pour l'API) - SANS écraser les defaults
+
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 var secretKey = jwtSettings["SecretKey"] ?? "YourVeryLongSecretKeyHere123456789";
 
-builder.Services.AddAuthentication()  // Pas de configuration par défaut
-    .AddJwtBearer("Bearer", options =>  // Schéma nommé explicitement
+builder.Services.AddAuthentication()  
+    .AddJwtBearer("Bearer", options =>  
     {
         options.TokenValidationParameters = new TokenValidationParameters
         {
@@ -103,6 +103,10 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.WebHost.UseUrls(
+    "http://0.0.0.0:7236",     
+    "https://localhost:7237"    
+);
 var app = builder.Build();
 
 var localizationOptions = app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value;
@@ -140,8 +144,8 @@ app.UseMiddleware<TechStockWeb.Middleware.LoggingMiddleware>();
 
 app.UseCors("AllowMauiApp");
 
-// IMPORTANT : L'ordre est crucial
-app.UseAuthentication();  // Doit être avant UseAuthorization
+
+app.UseAuthentication();  
 app.UseAuthorization();
 
 app.MapControllers();

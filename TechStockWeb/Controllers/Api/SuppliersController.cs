@@ -17,14 +17,14 @@ public class SuppliersController : ControllerBase
         _context = context;
     }
 
-    // GET: api/suppliers
+    
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Supplier>>> GetSuppliers()
     {
         return await _context.Supplier.ToListAsync();
     }
 
-    // GET: api/suppliers/{id}
+    
     [HttpGet("{id}")]
     public async Task<ActionResult<Supplier>> GetSupplier(int id)
     {
@@ -38,7 +38,7 @@ public class SuppliersController : ControllerBase
         return supplier;
     }
 
-    // POST: api/suppliers
+    
     [HttpPost]
     public async Task<ActionResult<Supplier>> CreateSupplier([FromBody] Supplier supplier)
     {
@@ -53,7 +53,7 @@ public class SuppliersController : ControllerBase
         return CreatedAtAction(nameof(GetSupplier), new { id = supplier.Id }, supplier);
     }
 
-    // PUT: api/suppliers/{id}
+    
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateSupplier(int id, [FromBody] Supplier supplier)
     {
@@ -83,7 +83,7 @@ public class SuppliersController : ControllerBase
         return NoContent();
     }
 
-    // DELETE: api/suppliers/{id}
+    
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteSupplier(int id)
     {

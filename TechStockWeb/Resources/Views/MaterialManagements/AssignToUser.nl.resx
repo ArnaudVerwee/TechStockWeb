@@ -119,5 +119,34 @@
 <data name="Back to List" xml:space="preserve">
     <value>Terug naar de lijst</value>
 </data>
-
+<data name="Assign a product to a user" xml:space="preserve">
+    <value>Een product toewijzen aan een gebruiker</value>
+</data>
+<data name="Assign Product" xml:space="preserve">
+    <value>Product toewijzen</value>
+</data>
+<data name="Product Information" xml:space="preserve">
+    <value>Product informatie</value>
+</data>
+<data name="Select a user :" xml:space="preserve">
+    <value>Selecteer een gebruiker :</value>
+</data>
+<data name="Select a user" xml:space="preserve">
+    <value>Selecteer een gebruiker</value>
+</data>
+<data name="Select the product state:" xml:space="preserve">
+    <value>Selecteer de productstatus :</value>
+</data>
+<data name="Select a state" xml:space="preserve">
+    <value>Selecteer een status</value>
+</data>
+<data name="Back to list" xml:space="preserve">
+    <value>Terug naar de lijst</value>
+</data>
+<data name="Product assigned successfully" xml:space="preserve">
+    <value>Product succesvol toegewezen</value>
+</data>
+<data name="Assign Product" xml:space="preserve">
+    <value>Product toewijzen</value>
+</data>
 </root>

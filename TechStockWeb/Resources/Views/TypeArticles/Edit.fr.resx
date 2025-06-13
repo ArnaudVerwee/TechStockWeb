@@ -113,5 +113,49 @@
 <data name="Name" xml:space="preserve">
     <value>Nom</value>
 </data>
-
+<data name="Type Article Information" xml:space="preserve">
+    <value>Informations du type d'article</value>
+</data>
+<data name="Enter name" xml:space="preserve">
+    <value>Entrez le nom</value>
+</data>
+<data name="Error" xml:space="preserve">
+    <value>Erreur</value>
+</data>
+<data name="Success" xml:space="preserve">
+    <value>Succès</value>
+</data>
+<data name="Type name required" xml:space="preserve">
+    <value>Le nom du type d'article est obligatoire.</value>
+</data>
+<data name="Type updated successfully" xml:space="preserve">
+    <value>Type d'article '{0}' modifié avec succès!</value>
+</data>
+<data name="Update failed" xml:space="preserve">
+    <value>Échec de la modification du type d'article</value>
+</data>
+<data name="An error occurred" xml:space="preserve">
+    <value>Une erreur s'est produite</value>
+</data>
+<data name="Unsaved changes" xml:space="preserve">
+    <value>Modifications non sauvegardées</value>
+</data>
+<data name="Unsaved changes message" xml:space="preserve">
+    <value>Vous avez des modifications non sauvegardées. Voulez-vous vraiment quitter ?</value>
+</data>
+<data name="Yes" xml:space="preserve">
+    <value>Oui</value>
+</data>
+<data name="No" xml:space="preserve">
+    <value>Non</value>
+</data>
+<data name="Language" xml:space="preserve">
+    <value>Langue</value>
+</data>
+<data name="ChooseLanguage" xml:space="preserve">
+    <value>Choisir la langue</value>
+</data>
+<data name="Cancel" xml:space="preserve">
+    <value>Annuler</value>
+</data>
 </root>

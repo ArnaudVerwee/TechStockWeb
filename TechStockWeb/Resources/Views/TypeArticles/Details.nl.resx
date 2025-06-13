@@ -113,5 +113,28 @@
  <data name="Name" xml:space="preserve">
     <value>Naam</value>
   </data>
-
+<data name="Type Product" xml:space="preserve">
+    <value>Producttype</value>
+</data>
+<data name="Type Article Information" xml:space="preserve">
+    <value>Artikeltype Informatie</value>
+</data>
+<data name="Error" xml:space="preserve">
+    <value>Fout</value>
+</data>
+<data name="Unable to reload details" xml:space="preserve">
+    <value>Kan details niet opnieuw laden</value>
+</data>
+<data name="Unable to open edit page" xml:space="preserve">
+    <value>Kan bewerkingspagina niet openen</value>
+</data>
+<data name="Language" xml:space="preserve">
+    <value>Taal</value>
+</data>
+<data name="ChooseLanguage" xml:space="preserve">
+    <value>Kies taal</value>
+</data>
+<data name="Cancel" xml:space="preserve">
+    <value>Annuleren</value>
+</data>
 </root>

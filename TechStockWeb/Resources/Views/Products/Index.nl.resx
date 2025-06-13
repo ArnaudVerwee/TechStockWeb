@@ -143,5 +143,40 @@
     <data name="TypeArticle" xml:space="preserve">
         <value>Artikeltype</value>
     </data>
-
+<data name="Products" xml:space="preserve"><value>Producten</value></data>
+<data name="ProductManagement" xml:space="preserve"><value>Productbeheer</value></data>
+<data name="Search" xml:space="preserve"><value>Zoeken</value></data>
+<data name="Reset" xml:space="preserve"><value>Reset</value></data>
+<data name="NamePlaceholder" xml:space="preserve"><value>Naam...</value></data>
+<data name="SerialPlaceholder" xml:space="preserve"><value>Serienummer...</value></data>
+<data name="Type" xml:space="preserve"><value>Type</value></data>
+<data name="Supplier" xml:space="preserve"><value>Leverancier</value></data>
+<data name="User" xml:space="preserve"><value>Gebruiker</value></data>
+<data name="Name" xml:space="preserve"><value>Naam</value></data>
+<data name="SerialNumber" xml:space="preserve"><value>Serienummer</value></data>
+<data name="Actions" xml:space="preserve"><value>Acties</value></data>
+<data name="NotAssigned" xml:space="preserve"><value>Niet toegewezen</value></data>
+<data name="All" xml:space="preserve"><value>Alle</value></data>
+<data name="UnnamedUser" xml:space="preserve"><value>Naamloze gebruiker</value></data>
+<data name="LoadingError" xml:space="preserve"><value>Laadfout</value></data>
+<data name="SearchError" xml:space="preserve"><value>Zoekfout</value></data>
+<data name="ResetError" xml:space="preserve"><value>Reset fout</value></data>
+<data name="CannotOpenEditPage" xml:space="preserve"><value>Kan bewerkingspagina niet openen</value></data>
+<data name="NavigationError" xml:space="preserve"><value>Navigatiefout</value></data>
+<data name="Details" xml:space="preserve"><value>Details</value></data>
+<data name="Confirm" xml:space="preserve"><value>Bevestigen</value></data>
+<data name="UnassignQuestion" xml:space="preserve"><value>{0} onttrekken van {1}?</value></data>
+<data name="DeleteQuestion" xml:space="preserve"><value>{0} verwijderen?</value></data>
+<data name="Yes" xml:space="preserve"><value>Ja</value></data>
+<data name="No" xml:space="preserve"><value>Nee</value></data>
+<data name="Success" xml:space="preserve"><value>Succes</value></data>
+<data name="ProductUnassigned" xml:space="preserve"><value>{0} is onttrokken</value></data>
+<data name="ProductDeleted" xml:space="preserve"><value>Product verwijderd</value></data>
+<data name="UnassignFailed" xml:space="preserve"><value>Onttrekken mislukt</value></data>
+<data name="UnassignError" xml:space="preserve"><value>Fout bij onttrekken</value></data>
+<data name="DeleteFailed" xml:space="preserve"><value>Verwijderen mislukt</value></data>
+<data name="DeleteError" xml:space="preserve"><value>Verwijderfout</value></data>
+<data name="Error" xml:space="preserve"><value>Fout</value></data>
+<data name="Cancel" xml:space="preserve"><value>Annuleren</value></data>
+<data name="ChooseLanguage" xml:space="preserve"><value>Taal kiezen</value></data>
 </root>

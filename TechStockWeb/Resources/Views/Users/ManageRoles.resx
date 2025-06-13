@@ -113,5 +113,7 @@
 <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
 </data>
-
+<data name="Available roles" xml:space="preserve">
+    <value>Available roles</value>
+</data>
 </root>

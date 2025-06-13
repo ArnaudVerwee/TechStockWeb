@@ -110,5 +110,32 @@
 <data name="Submit Signature" xml:space="preserve">
     <value>Soumettre la signature</value>
 </data>
+<data name="Assign a product to a use" xml:space="preserve">
+    <value>Assigner un produit à un utilisateur</value>
+</data>
+<data name="Assign a product to a user" xml:space="preserve">
+    <value>Assigner un produit à un utilisateur</value>
+</data>
+<data name="Assign Product" xml:space="preserve">
+    <value>Assigner le produit</value>
+</data>
+<data name="Product Information" xml:space="preserve">
+    <value>Informations du produit</value>
+</data>
+<data name="Select a user :" xml:space="preserve">
+    <value>Sélectionner un utilisateur :</value>
+</data>
+<data name="Select a user" xml:space="preserve">
+    <value>Sélectionner un utilisateur</value>
+</data>
+<data name="Select the product state:" xml:space="preserve">
+    <value>Sélectionner l'état du produit :</value>
+</data>
+<data name="Select a state" xml:space="preserve">
+    <value>Sélectionner un état</value>
+</data>
+<data name="Back to list" xml:space="preserve">
+    <value>Retour à la liste</value>
+</data>
 
 </root>

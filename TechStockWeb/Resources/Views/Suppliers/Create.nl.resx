@@ -110,5 +110,13 @@
 <data name="Back to List" xml:space="preserve">
     <value>Terug naar de lijst</value>
 </data>
-
+<data name="Create" xml:space="preserve"><value>Aanmaken</value></data>
+<data name="Supplier" xml:space="preserve"><value>Leverancier</value></data>
+<data name="Name" xml:space="preserve"><value>Naam</value></data>
+<data name="Back to List" xml:space="preserve"><value>Terug naar lijst</value></data>
+<data name="EnterSupplierName" xml:space="preserve"><value>Voer leveranciernaam in</value></data>
+<data name="SupplierNameRequired" xml:space="preserve"><value>Leveranciernaam is vereist.</value></data>
+<data name="SupplierCreatedSuccessfully" xml:space="preserve"><value>Leverancier '{0}' succesvol aangemaakt!</value></data>
+<data name="SupplierCreationFailed" xml:space="preserve"><value>Leverancier aanmaken mislukt</value></data>
+<data name="ErrorOccurred" xml:space="preserve"><value>Er is een fout opgetreden</value></data>
 </root>

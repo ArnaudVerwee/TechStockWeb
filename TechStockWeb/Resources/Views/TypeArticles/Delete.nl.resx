@@ -113,4 +113,43 @@
  <data name="Name" xml:space="preserve">
     <value>Naam</value>
   </data>
+<data name="Type Product" xml:space="preserve">
+    <value>een producttype</value>
+</data>
+<data name="Type Article Information" xml:space="preserve">
+    <value>Artikeltype Informatie</value>
+</data>
+<data name="Confirmation" xml:space="preserve">
+    <value>Bevestiging</value>
+</data>
+<data name="Do you really want to delete this type" xml:space="preserve">
+    <value>Wilt u dit type echt verwijderen?</value>
+</data>
+<data name="Yes" xml:space="preserve">
+    <value>Ja</value>
+</data>
+<data name="No" xml:space="preserve">
+    <value>Nee</value>
+</data>
+<data name="Success" xml:space="preserve">
+    <value>Succes</value>
+</data>
+<data name="Type deleted successfully" xml:space="preserve">
+    <value>Type succesvol verwijderd.</value>
+</data>
+<data name="Error" xml:space="preserve">
+    <value>Fout</value>
+</data>
+<data name="Delete error" xml:space="preserve">
+    <value>Verwijderfout</value>
+</data>
+<data name="Language" xml:space="preserve">
+    <value>Taal</value>
+</data>
+<data name="ChooseLanguage" xml:space="preserve">
+    <value>Kies taal</value>
+</data>
+<data name="Cancel" xml:space="preserve">
+    <value>Annuleren</value>
+</data>
 </root>

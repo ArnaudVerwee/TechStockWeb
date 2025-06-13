@@ -110,4 +110,31 @@
   <data name="Back to List" xml:space="preserve">
     <value>Back to List</value>
   </data>
+<data name="Name" xml:space="preserve">
+    <value>Name</value>
+</data>
+<data name="Type Product" xml:space="preserve">
+    <value>Type Product</value>
+</data>
+<data name="Type Article Information" xml:space="preserve">
+    <value>Type Article Information</value>
+</data>
+<data name="Error" xml:space="preserve">
+    <value>Error</value>
+</data>
+<data name="Unable to reload details" xml:space="preserve">
+    <value>Unable to reload details</value>
+</data>
+<data name="Unable to open edit page" xml:space="preserve">
+    <value>Unable to open edit page</value>
+</data>
+<data name="Language" xml:space="preserve">
+    <value>Language</value>
+</data>
+<data name="ChooseLanguage" xml:space="preserve">
+    <value>Choose language</value>
+</data>
+<data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+</data>
 </root>
